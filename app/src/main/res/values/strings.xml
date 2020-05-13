@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">MyLibrary</string>
+    <string name="sample">Sample</string>
+
+    <string name="book_author">Author : </string>
+    <string name="book_rating">Rating : </string>
+    <string name="book_divider">|</string>
+    <string name="book_publisher">Publisher : </string>
+    <string name="book_year">Year : </string>
+    <string name="book_isbn10">ISBN10 : </string>
+    <string name="book_isbn13">ISBN13 : </string>
+    <string name="book_price">Price : </string>
+    <string name="book_language">Language : </string>
+    <string name="book_url">URL: </string>
+    <string name="book_page">Page : </string>
+
+    <string name="appbar_item_search">Search</string>
+    <string name="appbar_item_sort">Sort</string>
+    <string name="appbar_item_search_hint">Search book</string>
+
+    <string name="transition_name_thumbnail">bookThumbnail</string>
+
+</resources>
