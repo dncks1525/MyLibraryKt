@@ -5,7 +5,5 @@ import androidx.lifecycle.ViewModel
 import com.chani.mylibrarykt.BookStoreApi.Book
 
 class BookModel : ViewModel() {
-    private val books = MutableLiveData<MutableList<Book>>()
-
-    fun getBooks(): MutableLiveData<MutableList<Book>> = books
+    val books = MutableLiveData<MutableList<Book>>()
 }
