@@ -6,28 +6,30 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chani.mylibrarykt.PageItem.PageType
 import com.chani.mylibrarykt.Pages.*
+import kotlinx.android.synthetic.main.activity_book_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
+    val bookRepo by lazy { BookStoreApi(this).bookRepo }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val pageAdapter = PageAdapter(
-            listOf(
-                registerPage(PageType.NEW),
-                registerPage(PageType.SEARCH),
-                registerPage(PageType.BOOKMARK),
-                registerPage(PageType.HISTORY)
-            )
+        val pages = listOf(
+            registerPage(PageType.NEW),
+            registerPage(PageType.SEARCH),
+            registerPage(PageType.BOOKMARK),
+            registerPage(PageType.HISTORY)
         )
 
-        GlobalScope.launch {
-
+        GlobalScope.launch(Dispatchers.Main) {
+            pages[0].bookModel.books.value = bookRepo.getNewBook().books
+            pager.adapter = PageAdapter(pages)
         }
     }
 
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 bookModel =
                     ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(BookModel::class.java)
                 bookModel.books.observe(this@MainActivity, Observer {
-
+                    println("size = ${it.size}")
                 })
                 onItemClick = { view, book ->
 
