@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.chani.mylibrarykt.PageItem.PageType
 import com.chani.mylibrarykt.Pages.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +25,10 @@ class MainActivity : AppCompatActivity() {
                 registerPage(PageType.HISTORY)
             )
         )
+
+        GlobalScope.launch {
+
+        }
     }
 
     private fun registerPage(type: PageType) = when (type) {
