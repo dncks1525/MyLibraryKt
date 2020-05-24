@@ -1,6 +1,8 @@
-package com.chani.mylibrarykt
+package com.chani.mylibrarykt.data
 
 import android.content.Context
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -12,7 +14,6 @@ class BookStoreApi(ctx: Context) {
     var bookRepo: IBookRepo
 
     init {
-        println("init")
         val client = OkHttpClient.Builder()
             .cache(Cache(ctx.cacheDir, 10 * 1024 * 1024))
             .build()
@@ -48,9 +49,10 @@ class BookStoreApi(ctx: Context) {
         var isBookmarked: Boolean
     )
 
+    @Parcelize
     data class BookDetail(
         val error: Int,
-        val string: String,
+        val title: String,
         val subtitle: String,
         val authors: String,
         val publisher: String,
@@ -64,6 +66,6 @@ class BookStoreApi(ctx: Context) {
         val price: String,
         val image: String,
         val url: String,
-        val memo: String
-    )
+        val memo: String?
+    ) : Parcelable
 }

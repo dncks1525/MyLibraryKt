@@ -1,9 +1,7 @@
-package com.chani.mylibrarykt
+package com.chani.mylibrarykt.data
 
 import android.view.View
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-import com.chani.mylibrarykt.BookStoreApi.Book
+import com.chani.mylibrarykt.data.BookStoreApi.Book
 
 open class PageItem(val type: PageType) {
     lateinit var bookModel: BookModel
