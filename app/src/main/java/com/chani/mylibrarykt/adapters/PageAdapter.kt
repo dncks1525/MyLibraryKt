@@ -31,7 +31,6 @@ class PageAdapter(private val items: List<PageItem>) : RecyclerView.Adapter<Page
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
         } else {
-            println("onBindViewHolder request")
             val what = payloads[0] as Int
             holder.request(what)
         }
@@ -40,7 +39,6 @@ class PageAdapter(private val items: List<PageItem>) : RecyclerView.Adapter<Page
     override fun getItemCount(): Int = items.size
 
     fun request(position: Int, what: Int) {
-        println("page adapter request")
         notifyItemChanged(position, what)
     }
 
@@ -68,7 +66,6 @@ class PageAdapter(private val items: List<PageItem>) : RecyclerView.Adapter<Page
 
         fun request(what: Int) {
             recycler.adapter?.let {
-                println("PageHolder request")
                 val adapter = it as BookAdapter
                 adapter.request(what)
             }
