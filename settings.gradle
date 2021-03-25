@@ -1,2 +1,2 @@
-rootProject.name='MyLibraryKt'
 include ':app'
+rootProject.name='MyLibraryKt'
