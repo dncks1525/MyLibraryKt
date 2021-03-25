@@ -48,6 +48,7 @@ dependencies {
     retrofit()
     dagger()
     work()
+    room()
     paging()
     glide()
     junit4()
