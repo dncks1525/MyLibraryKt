@@ -1,9 +1,9 @@
-package com.chani.mylibrarykt.data
+package com.chani.mylibrarykt.network.model
 
 data class Books(
-    val error: String,
-    val total: String,
-    val page: String,
+    val error: Int,
+    val total: Int,
+    val page: Int,
     val books: List<Book>,
 )
 

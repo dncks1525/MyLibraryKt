@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data
+package com.chani.mylibrarykt.network.model
 
 data class BookInfo(
     val error: String,

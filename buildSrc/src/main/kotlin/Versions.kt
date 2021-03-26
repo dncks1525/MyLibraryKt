@@ -23,7 +23,7 @@ object Versions {
     const val NAVIGATION = "2.3.3"
     const val WORK = "2.5.0"
     const val ROOM = "2.3.0-beta03"
-    const val PAGING = "3.0.0-beta01"
+    const val PAGING = "3.0.0-beta02"
     const val DAGGER = "2.33"
     const val GLIDE = "4.8.0"
     const val RETROFIT = "2.9.0"
