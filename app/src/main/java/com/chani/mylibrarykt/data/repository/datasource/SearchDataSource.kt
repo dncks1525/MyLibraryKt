@@ -1,18 +1,19 @@
-package com.chani.mylibrarykt.paging
+package com.chani.mylibrarykt.data.repository.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.chani.mylibrarykt.network.ItBookstoreApi
-import com.chani.mylibrarykt.network.model.Book
+import com.chani.mylibrarykt.data.entity.Book
+import com.chani.mylibrarykt.data.remote.BookstoreApi
 
-class SearchBookDataSource(
-    private val api: ItBookstoreApi,
-    private val query: String
+class SearchDataSource(
+    private val api: BookstoreApi,
+    private val query: String,
 ) : PagingSource<Int, Book>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
         return try {
             val page = params.key ?: 1
             val bookstore = api.search(query, page)
+            println("bookstore page ${bookstore.page} ${bookstore.total}")
             LoadResult.Page(
                 data = bookstore.books,
                 prevKey = if (page > 1) page - 1 else null,

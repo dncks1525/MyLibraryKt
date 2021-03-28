@@ -2,10 +2,12 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
         gradlePlugin()
+        hiltPlugin()
     }
 }
 

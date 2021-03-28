@@ -69,6 +69,19 @@ fun DependencyHandler.dagger() {
     kapt("com.google.dagger:dagger-compiler:${Versions.DAGGER}")
 }
 
+fun DependencyHandler.hiltPlugin() {
+    classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}")
+}
+
+fun DependencyHandler.hilt() {
+    implementation("com.google.dagger:hilt-android:${Versions.HILT}")
+    kapt("com.google.dagger:hilt-compiler:${Versions.HILT}")
+    testImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptTest("com.google.dagger:hilt-compiler:${Versions.HILT}")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:${Versions.HILT}")
+}
+
 fun DependencyHandler.retrofit() {
     implementation("com.squareup.retrofit2:retrofit:${Versions.RETROFIT}")
     implementation("com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}")
@@ -81,6 +94,14 @@ fun DependencyHandler.glide() {
 
 private fun DependencyHandler.kapt(depName: String) {
     add("kapt", depName)
+}
+
+private fun DependencyHandler.kaptTest(depName: String) {
+    add("kaptTest", depName)
+}
+
+private fun DependencyHandler.kaptAndroidTest(depName: String) {
+    add("kaptAndroidTest", depName)
 }
 
 private fun DependencyHandler.implementation(depName: String) {

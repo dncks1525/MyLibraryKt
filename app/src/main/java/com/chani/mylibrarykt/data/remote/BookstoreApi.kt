@@ -1,11 +1,11 @@
-package com.chani.mylibrarykt.network
+package com.chani.mylibrarykt.data.remote
 
-import com.chani.mylibrarykt.network.model.BookInfo
-import com.chani.mylibrarykt.network.model.Books
+import com.chani.mylibrarykt.data.entity.BookInfo
+import com.chani.mylibrarykt.data.entity.Books
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ItBookstoreApi {
+interface BookstoreApi {
     @GET("new")
     suspend fun getNewBooks(): Books
 

@@ -1,20 +1,18 @@
-package com.chani.mylibrarykt.paging
+package com.chani.mylibrarykt.data.repository.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.chani.mylibrarykt.network.ItBookstoreApi
-import com.chani.mylibrarykt.network.model.Book
+import com.chani.mylibrarykt.data.entity.Book
+import com.chani.mylibrarykt.data.remote.BookstoreApi
+import java.lang.Exception
+import javax.inject.Inject
 
-class NewBookDataSource(
-    private val api: ItBookstoreApi
+class NewBooksDataSource(
+    private val api: BookstoreApi
 ) : PagingSource<Int, Book>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
         return try {
-            LoadResult.Page(
-                data = api.getNewBooks().books,
-                prevKey = null,
-                nextKey = null
-            )
+            LoadResult.Page(data = api.getNewBooks().books, null, null)
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

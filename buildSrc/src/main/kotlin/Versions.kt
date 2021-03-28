@@ -27,4 +27,5 @@ object Versions {
     const val DAGGER = "2.33"
     const val GLIDE = "4.8.0"
     const val RETROFIT = "2.9.0"
+    const val HILT = "2.33-beta"
 }

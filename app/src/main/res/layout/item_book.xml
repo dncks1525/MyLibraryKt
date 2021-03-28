@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/book_width"
+    android:layout_height="@dimen/book_height"
+    android:orientation="vertical"
+    tools:background="#CFF0FA">
+
+    <ImageView
+        android:id="@+id/coverImg"
+        android:layout_width="@dimen/book_cover_img_width"
+        android:layout_height="@dimen/book_cover_img_height"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/book_sample" />
+
+    <TextView
+        android:id="@+id/titleTxt"
+        style="@style/AppText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/book_title_txt_margin_horizontal"
+        android:layout_marginTop="@dimen/book_title_txt_margin_top"
+        android:textAlignment="center"
+        android:textSize="@dimen/book_title_txt_text_size"
+        tools:text="@string/sample" />
+
+</LinearLayout>

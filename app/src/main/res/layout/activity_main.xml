@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:padding="5dp"
     tools:context=".ui.MainActivity">
 
     <EditText
@@ -24,19 +25,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:text="@string/common_new_book"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchEdt"
-        tools:text="@string/sample" />
+        app:layout_constraintTop_toBottomOf="@id/searchEdt" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newRecycler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:scrollbars="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newLabelTxt" />
+        app:layout_constraintTop_toBottomOf="@id/newLabelTxt"
+        tools:listitem="@layout/item_book" />
 
     <TextView
         android:id="@+id/recentLabelTxt"

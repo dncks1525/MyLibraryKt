@@ -1,8 +1,9 @@
 plugins {
     id("com.android.application")
+    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -20,11 +21,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
-    }
-
     buildTypes {
         named("release") {
             isMinifyEnabled = false
@@ -40,17 +36,35 @@ android {
         android.buildFeatures.dataBinding = true
         android.buildFeatures.viewBinding = true
     }
+
+    compileOptions {
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
     common()
     lifecycle()
     retrofit()
-    dagger()
+    hilt()
     work()
     room()
     paging()
     glide()
     junit4()
+    robolectric()
     truth()
 }

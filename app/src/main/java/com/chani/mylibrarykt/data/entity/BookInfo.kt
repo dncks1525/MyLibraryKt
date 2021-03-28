@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.network.model
+package com.chani.mylibrarykt.data.entity
 
 data class BookInfo(
     val error: String,
@@ -17,9 +17,4 @@ data class BookInfo(
     val image: String,
     val url: String,
     val pdf: Pdf
-)
-
-data class Pdf(
-    val Chapter2: String,
-    val Chapter5: String
 )
