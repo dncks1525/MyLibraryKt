@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/book_width"
     android:layout_height="@dimen/book_height"
-    android:orientation="vertical"
     tools:background="#CFF0FA">
 
     <ImageView
@@ -18,12 +17,23 @@
         style="@style/AppText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/book_title_txt_margin_horizontal"
-        android:layout_marginTop="@dimen/book_title_txt_margin_top"
-        android:maxLines="3"
+        android:layout_below="@id/coverImg"
+        android:layout_marginHorizontal="10dp"
+        android:maxLines="2"
         android:singleLine="false"
-        android:textAlignment="center"
-        android:textSize="@dimen/book_title_txt_text_size"
+        android:textSize="12sp"
         tools:text="@string/sample" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/priceTxt"
+        style="@style/AppText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTxt"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="2dp"
+        android:gravity="bottom"
+        android:textSize="10sp"
+        tools:text="@string/sample" />
+</RelativeLayout>

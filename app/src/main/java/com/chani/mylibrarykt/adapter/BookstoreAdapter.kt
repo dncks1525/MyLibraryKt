@@ -25,11 +25,14 @@ class BookstoreAdapter : PagingDataAdapter<Book, BookstoreAdapter.RecyclerViewHo
         private val binding: ItemBookBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Book?) = with(binding) {
-            Glide.with(binding.root)
-                .load(data?.image)
-                .thumbnail(0.1f)
-                .into(coverImg)
-            titleTxt.text = data?.title
+            data?.let {
+                Glide.with(binding.root)
+                    .load(it.image)
+                    .thumbnail(0.1f)
+                    .into(coverImg)
+                titleTxt.text = it.title
+                priceTxt.text = it.price
+            }
         }
     }
 
