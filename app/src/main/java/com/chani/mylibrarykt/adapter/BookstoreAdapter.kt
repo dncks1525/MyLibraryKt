@@ -25,7 +25,6 @@ class BookstoreAdapter : PagingDataAdapter<Book, BookstoreAdapter.RecyclerViewHo
         private val binding: ItemBookBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Book?) = with(binding) {
-            println(data?.image)
             Glide.with(binding.root)
                 .load(data?.image)
                 .thumbnail(0.1f)

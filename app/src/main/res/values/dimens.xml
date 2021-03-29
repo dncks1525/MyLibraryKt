@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="book_width">120dp</dimen>
-    <dimen name="book_height">180dp</dimen>
+    <dimen name="book_height">200dp</dimen>
     <dimen name="book_cover_img_width">120dp</dimen>
     <dimen name="book_cover_img_height">150dp</dimen>
     <dimen name="book_title_txt_margin_top">5dp</dimen>

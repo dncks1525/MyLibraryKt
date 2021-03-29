@@ -18,7 +18,7 @@ class BookstoreViewModel @Inject constructor(
         return repository.getNewBooks().cachedIn(viewModelScope)
     }
 
-    fun search(): Flow<PagingData<Book>> {
-        return repository.search().cachedIn(viewModelScope)
+    fun search(query: String): Flow<PagingData<Book>> {
+        return repository.search(query).cachedIn(viewModelScope)
     }
 }

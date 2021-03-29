@@ -20,10 +20,10 @@ class BookstoreRepository @Inject constructor(
         ).flow
     }
 
-    fun search(): Flow<PagingData<Book>> {
+    fun search(query: String): Flow<PagingData<Book>> {
         return Pager(
             config = PagingConfig(pageSize = 1),
-            pagingSourceFactory = { SearchDataSource(api, "kotlin") }
+            pagingSourceFactory = { SearchDataSource(api, query) }
         ).flow
     }
 }
