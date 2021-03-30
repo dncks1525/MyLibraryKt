@@ -1,9 +1,11 @@
 plugins {
     id("com.android.application")
-    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
+    id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -27,7 +29,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         named("debug") {
-            manifestPlaceholders["enableCrashlytics"] = false
+            manifestPlaceholders["enableCrashlytics"] = true
             manifestPlaceholders["alwaysUpdateBuildId"] = false
         }
     }
@@ -57,6 +59,7 @@ android {
 
 dependencies {
     common()
+    firebase()
     lifecycle()
     retrofit()
     hilt()

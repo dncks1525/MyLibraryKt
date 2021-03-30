@@ -17,6 +17,17 @@ fun DependencyHandler.common() {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
 }
 
+fun DependencyHandler.firebasePlugin() {
+    classpath("com.google.gms:google-services:${Versions.GOOGLE_PLAY_SERVICE}")
+    classpath("com.google.firebase:firebase-crashlytics-gradle:${Versions.FIREBASE_CRASHLYTICS}")
+}
+
+fun DependencyHandler.firebase() {
+    implementation(platform("com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"))
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+}
+
 fun DependencyHandler.junit4() {
     testImplementation("junit:junit:${Versions.JUNIT4}")
     androidTestImplementation("androidx.test.ext:junit:${Versions.JUNIT4_TEST_EXT}")
@@ -92,30 +103,30 @@ fun DependencyHandler.glide() {
     kapt("com.github.bumptech.glide:compiler:${Versions.GLIDE}")
 }
 
-private fun DependencyHandler.kapt(depName: String) {
+private fun DependencyHandler.kapt(depName: Any) {
     add("kapt", depName)
 }
 
-private fun DependencyHandler.kaptTest(depName: String) {
+private fun DependencyHandler.kaptTest(depName: Any) {
     add("kaptTest", depName)
 }
 
-private fun DependencyHandler.kaptAndroidTest(depName: String) {
+private fun DependencyHandler.kaptAndroidTest(depName: Any) {
     add("kaptAndroidTest", depName)
 }
 
-private fun DependencyHandler.implementation(depName: String) {
+private fun DependencyHandler.implementation(depName: Any) {
     add("implementation", depName)
 }
 
-private fun DependencyHandler.testImplementation(depName: String) {
+private fun DependencyHandler.testImplementation(depName: Any) {
     add("testImplementation", depName)
 }
 
-private fun DependencyHandler.androidTestImplementation(depName: String) {
+private fun DependencyHandler.androidTestImplementation(depName: Any) {
     add("androidTestImplementation", depName)
 }
 
-private fun DependencyHandler.classpath(depName: String) {
+private fun DependencyHandler.classpath(depName: Any) {
     add("classpath", depName)
 }

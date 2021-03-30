@@ -58,6 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recentLabelTxt" />
+        app:layout_constraintTop_toBottomOf="@id/recentLabelTxt"
+        tools:listitem="@layout/item_cardview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

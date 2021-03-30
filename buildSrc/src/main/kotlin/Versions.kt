@@ -1,6 +1,10 @@
 object Versions {
     const val ANDROID_GRADLE = "4.1.3"
-    const val KOTLIN = "1.4.31"
+    const val KOTLIN = "1.4.32"
+
+    const val GOOGLE_PLAY_SERVICE = "4.3.5"
+    const val FIREBASE_CRASHLYTICS = "2.5.2"
+    const val FIREBASE_BOM = "26.8.0"
 
     const val APPCOMPAT = "1.2.0"
     const val CORE_KTX = "1.3.2"

@@ -28,9 +28,9 @@ class BookstoreAdapter : PagingDataAdapter<Book, BookstoreAdapter.RecyclerViewHo
             data?.let {
                 Glide.with(binding.root)
                     .load(it.image)
+                    .centerCrop()
                     .thumbnail(0.1f)
                     .into(coverImg)
-                titleTxt.text = it.title
                 priceTxt.text = it.price
             }
         }

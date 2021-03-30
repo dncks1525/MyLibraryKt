@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         gradlePlugin()
         hiltPlugin()
+        firebasePlugin()
     }
 }
 
