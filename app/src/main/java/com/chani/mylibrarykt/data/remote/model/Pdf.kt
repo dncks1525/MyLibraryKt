@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data.entity
+package com.chani.mylibrarykt.data.remote.model
 
 data class Pdf(
     val Chapter2: String,

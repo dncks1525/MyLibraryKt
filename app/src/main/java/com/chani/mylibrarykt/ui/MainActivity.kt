@@ -4,9 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.chani.mylibrarykt.adapter.BookstoreAdapter
-import com.chani.mylibrarykt.data.viewmodel.BookstoreViewModel
+import com.chani.mylibrarykt.adapter.BookAdapter
+import com.chani.mylibrarykt.data.remote.viewmodel.BookstoreViewModel
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
+import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -19,9 +20,9 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private val bookstoreViewModel: BookstoreViewModel by viewModels()
 
-    @Inject lateinit var bookstoreAdapter: BookstoreAdapter
+    private val bookstoreViewModel: BookstoreViewModel by viewModels()
+    @Inject lateinit var bookAdapter: BookAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +30,30 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAnalytics = Firebase.analytics
 
+        mutableListOf<String>().apply {
+            add("Android")
+            add("IOS")
+            add("C#")
+            add("Python")
+            add("TensorFlow")
+        }.forEach { book ->
+            val bookChip = Chip(this).apply {
+                text = book
+                setOnClickListener { v ->
+                    when (v) {
+                        is Chip -> println(v.text)
+                    }
+                }
+            }
+            binding.chipGroup.addView(bookChip)
+        }
+
         binding.apply {
-            newRecycler.setHasFixedSize(true)
-            newRecycler.adapter = bookstoreAdapter
+            bookstoreRecycler.setHasFixedSize(true)
+            bookstoreRecycler.adapter = bookAdapter
             lifecycleScope.launch {
                 bookstoreViewModel.getNewBooks().collectLatest {
-                    bookstoreAdapter.submitData(it)
+                    bookAdapter.submitData(it)
                 }
             }
         }

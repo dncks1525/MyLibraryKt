@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data.entity
+package com.chani.mylibrarykt.data.remote.model
 
 data class BookDetail(
     val error: String,

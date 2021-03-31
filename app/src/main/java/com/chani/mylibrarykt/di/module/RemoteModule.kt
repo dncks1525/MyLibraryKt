@@ -2,7 +2,7 @@ package com.chani.mylibrarykt.di.module
 
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.data.remote.BookstoreApi
-import com.chani.mylibrarykt.data.repository.BookstoreRepository
+import com.chani.mylibrarykt.data.remote.repository.BookstoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,11 +1,11 @@
-package com.chani.mylibrarykt.data.repository.datasource
+package com.chani.mylibrarykt.data.remote.repository.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.chani.mylibrarykt.data.entity.Book
+import com.chani.mylibrarykt.data.remote.model.Book
 import com.chani.mylibrarykt.data.remote.BookstoreApi
 
-class SearchDataSource(
+class SearchPagingSource(
     private val api: BookstoreApi,
     private val query: String,
 ) : PagingSource<Int, Book>() {

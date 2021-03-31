@@ -1,6 +1,6 @@
 package com.chani.mylibrarykt.di.module
 
-import com.chani.mylibrarykt.adapter.BookstoreAdapter
+import com.chani.mylibrarykt.adapter.BookAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +10,7 @@ import dagger.hilt.android.components.ActivityComponent
 @InstallIn(ActivityComponent::class)
 object ActivityModule {
     @Provides
-    fun provideBookstoreAdapter(): BookstoreAdapter {
-        return BookstoreAdapter()
+    fun provideBookstoreAdapter(): BookAdapter {
+        return BookAdapter()
     }
 }
