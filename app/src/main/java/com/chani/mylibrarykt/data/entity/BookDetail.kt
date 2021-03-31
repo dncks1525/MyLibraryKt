@@ -1,6 +1,6 @@
 package com.chani.mylibrarykt.data.entity
 
-data class BookInfo(
+data class BookDetail(
     val error: String,
     val title: String,
     val subtitle: String,

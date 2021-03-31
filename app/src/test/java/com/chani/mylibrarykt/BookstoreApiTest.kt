@@ -57,7 +57,7 @@ class BookstoreApiTest {
             try {
                 api.getNewBooks().also { bookstore ->
                     if (bookstore.books.isNotEmpty()) {
-                        val result = api.getBookInfo(bookstore.books[0].isbn13)
+                        val result = api.getBookDetail(bookstore.books[0].isbn13)
                         isWorking = bookstore.books[0].title == result.title
                         println(result)
                     }

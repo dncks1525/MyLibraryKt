@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.ui
+package com.chani.mylibrarykt.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

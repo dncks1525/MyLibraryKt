@@ -6,14 +6,13 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.chani.mylibrarykt.databinding.ItemBookBinding
 import com.chani.mylibrarykt.data.entity.Book
+import com.chani.mylibrarykt.databinding.ItemBookSimpleBinding
 
 class BookstoreAdapter : PagingDataAdapter<Book, BookstoreAdapter.RecyclerViewHolder>(RecyclerDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         return RecyclerViewHolder(
-            ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemBookSimpleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
@@ -22,7 +21,7 @@ class BookstoreAdapter : PagingDataAdapter<Book, BookstoreAdapter.RecyclerViewHo
     }
 
     inner class RecyclerViewHolder(
-        private val binding: ItemBookBinding
+        private val binding: ItemBookSimpleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Book?) = with(binding) {
             data?.let {

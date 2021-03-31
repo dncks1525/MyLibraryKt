@@ -1,26 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/book_width"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/book_height"
-    android:orientation="vertical"
-    tools:background="#CFF0FA">
+    android:layout_marginHorizontal="@dimen/book_margin_horizontal"
+    android:layout_marginTop="@dimen/book_margin_top"
+    app:cardCornerRadius="@dimen/book_corner_radius">
 
-    <ImageView
-        android:id="@+id/coverImg"
-        android:layout_width="@dimen/book_cover_img_width"
-        android:layout_height="@dimen/book_cover_img_height"
-        tools:src="@drawable/book_sample" />
-
-    <TextView
-        android:id="@+id/priceTxt"
-        style="@style/AppText"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="bottom|end"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        tools:text="@string/sample" />
-</LinearLayout>
+        android:padding="@dimen/book_inner_padding">
+
+        <TextView
+            android:id="@+id/titleTxt"
+            style="@style/AppText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/book_title_txt_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/sample" />
+
+        <View
+            android:id="@+id/lineView1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/book_line_view_height"
+            android:layout_marginTop="@dimen/book_line_view_margin_top"
+            android:background="@color/book_line_view_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTxt" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contentRecycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/book_content_recycler_margin_top"
+            app:layout_constraintBottom_toTopOf="@id/lineView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineView1"
+            tools:layout_height="120dp" />
+
+        <View
+            android:id="@+id/lineView2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/book_line_view_height"
+            android:layout_marginTop="@dimen/book_line_view_margin_top"
+            android:background="@color/book_line_view_background"
+            app:layout_constraintEnd_toEndOf="@id/lineView1"
+            app:layout_constraintStart_toStartOf="@id/lineView1"
+            app:layout_constraintTop_toBottomOf="@id/contentRecycler" />
+
+        <Button
+            android:id="@+id/seeAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/book_see_all_btn_margin_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineView2"
+            tools:text="@string/sample" />
+
+        <TextView
+            android:id="@+id/totalTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/seeAllBtn"
+            app:layout_constraintEnd_toStartOf="@id/seeAllBtn"
+            app:layout_constraintTop_toTopOf="@id/seeAllBtn"
+            tools:text="@string/sample" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
