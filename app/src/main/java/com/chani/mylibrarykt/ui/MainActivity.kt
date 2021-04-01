@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookAdapter
+import com.chani.mylibrarykt.data.remote.model.Bookstore
 import com.chani.mylibrarykt.data.remote.viewmodel.BookstoreViewModel
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
 import com.google.android.material.chip.Chip
@@ -32,10 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         mutableListOf<String>().apply {
             add("Android")
+            add("Kotlin")
             add("IOS")
             add("C#")
             add("Python")
-            add("TensorFlow")
         }.forEach { book ->
             val bookChip = Chip(this).apply {
                 text = book
