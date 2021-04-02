@@ -5,7 +5,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookAdapter
-import com.chani.mylibrarykt.data.remote.model.Bookstore
 import com.chani.mylibrarykt.data.remote.viewmodel.BookstoreViewModel
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
 import com.google.android.material.chip.Chip

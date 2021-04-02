@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.chani.mylibrarykt.data.remote.model.Book
 import com.chani.mylibrarykt.databinding.ItemBookSimpleBinding
 
-class BookAdapter : PagingDataAdapter<Book, BookAdapter.RecyclerViewHolder>(RecyclerDiffUtil()) {
+class BookAdapter : PagingDataAdapter<Book, BookAdapter.RecyclerViewHolder>(RecyclerComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         return RecyclerViewHolder(
             ItemBookSimpleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,7 +35,7 @@ class BookAdapter : PagingDataAdapter<Book, BookAdapter.RecyclerViewHolder>(Recy
         }
     }
 
-    private class RecyclerDiffUtil : DiffUtil.ItemCallback<Book>() {
+    private class RecyclerComparator : DiffUtil.ItemCallback<Book>() {
         override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
             return oldItem.title == newItem.title
         }
