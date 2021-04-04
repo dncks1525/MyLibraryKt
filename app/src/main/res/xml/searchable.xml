@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
-    android:hint="@string/appbar_item_search_hint"
+    android:hint="@string/search_hint"
     android:label="@string/app_name"
-    android:searchSuggestAuthority="com.chani.mylibrarykt.SearchHistoryProvider"
-    android:searchSuggestSelection=" ?"/>
+    android:searchSuggestAuthority="com.chani.mylibrarykt.provider.QuickSearchProvider"
+    android:searchSuggestSelection=" ?"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />

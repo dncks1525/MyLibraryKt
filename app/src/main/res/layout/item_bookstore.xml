@@ -7,46 +7,54 @@
     android:layout_marginHorizontal="15dp"
     android:layout_marginTop="15dp">
 
-    <TextView
-        android:id="@+id/titleTxt"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleAreaCst"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/subtitleTxt"
-        app:layout_constraintEnd_toStartOf="@id/seeAllBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/sample" />
-
-    <TextView
-        android:id="@+id/subtitleTxt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@id/coverImgRecycler"
-        app:layout_constraintEnd_toStartOf="@id/seeAllBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTxt"
-        tools:text="@string/sample" />
-
-    <Button
-        android:id="@+id/seeAllBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/titleTxt"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/sample" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/seeAllImgBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/sample" />
+
+        <ImageButton
+            android:id="@+id/seeAllImgBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:focusable="false"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            app:layout_constraintBottom_toBottomOf="@id/titleTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/titleTxt"
+            app:layout_constraintTop_toTopOf="@id/titleTxt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/coverImgRecycler"
+        android:id="@+id/booksRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seeAllBtn" />
+        app:layout_constraintTop_toBottomOf="@id/titleAreaCst"
+        tools:listitem="@layout/item_books" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

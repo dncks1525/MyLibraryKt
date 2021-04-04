@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.chani.mylibrarykt.data.remote.BookstoreApi
 import com.chani.mylibrarykt.data.remote.model.Book
+import com.chani.mylibrarykt.data.remote.model.BookDetail
 import com.chani.mylibrarykt.data.remote.repository.pagingsource.NewBooksPagingSource
 import com.chani.mylibrarykt.data.remote.repository.pagingsource.SearchPagingSource
 import kotlinx.coroutines.flow.Flow

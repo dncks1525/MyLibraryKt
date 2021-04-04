@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/backImgBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/coverImg"
+        android:layout_width="140dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/backImgBtn"
+        app:layout_constraintTop_toBottomOf="@id/backImgBtn"
+        tools:src="@drawable/book_sample" />
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/coverImg"
+        app:layout_constraintTop_toTopOf="@id/coverImg"
+        tools:text="@string/sample" />
+
+    <TextView
+        android:id="@+id/subtitleTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/titleTxt"
+        app:layout_constraintStart_toStartOf="@id/titleTxt"
+        app:layout_constraintTop_toBottomOf="@id/titleTxt"
+        tools:text="@string/sample" />
+
+    <TextView
+        android:id="@+id/authorTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@id/titleTxt"
+        app:layout_constraintStart_toStartOf="@id/titleTxt"
+        app:layout_constraintTop_toBottomOf="@id/subtitleTxt"
+        tools:text="@string/sample" />
+
+    <TextView
+        android:id="@+id/ratingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toStartOf="@id/lineView1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coverImg"
+        tools:text="@string/sample" />
+
+    <ImageView
+        android:id="@+id/ratingImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_star_24"
+        app:layout_constraintBottom_toBottomOf="@id/ratingTxt"
+        app:layout_constraintStart_toEndOf="@id/ratingTxt"
+        app:layout_constraintTop_toTopOf="@id/ratingTxt" />
+
+    <View
+        android:id="@+id/lineView1"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="#777777"
+        app:layout_constraintBottom_toBottomOf="@id/ratingTxt"
+        app:layout_constraintEnd_toStartOf="@id/pagesTxt"
+        app:layout_constraintStart_toEndOf="@id/ratingTxt"
+        app:layout_constraintTop_toTopOf="@id/ratingTxt" />
+
+    <TextView
+        android:id="@+id/pageLabelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:text="@string/book_page"
+        app:layout_constraintBottom_toBottomOf="@id/ratingTxt"
+        app:layout_constraintEnd_toStartOf="@id/pagesTxt"
+        app:layout_constraintTop_toTopOf="@id/ratingTxt" />
+
+    <TextView
+        android:id="@+id/pagesTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/ratingTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lineView1"
+        app:layout_constraintTop_toTopOf="@id/ratingTxt"
+        tools:text="@string/sample" />
+
+    <Button
+        android:id="@+id/buyBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingTxt"
+        tools:text="@string/sample" />
+
+    <View
+        android:id="@+id/lineView2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#777777"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buyBtn" />
+
+    <TextView
+        android:id="@+id/describeTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lineView2"
+        android:layout_marginHorizontal="20dp"
+        tools:text="@string/sample" />
+
+    <View
+        android:id="@+id/lineView3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#777777"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/describeTxt" />
+
+    <TextView
+        android:id="@+id/publisherLabelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/book_publisher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lineView3" />
+
+    <TextView
+        android:id="@+id/publisherTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/publisherLabelTxt"
+        tools:text="@string/sample" />
+
+    <TextView
+        android:id="@+id/yearLabelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:includeFontPadding="false"
+        android:text="@string/book_year"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/publisherTxt" />
+
+    <TextView
+        android:id="@+id/yearTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yearLabelTxt"
+        tools:text="@string/sample" />
+
+    <TextView
+        android:id="@+id/langLabelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:includeFontPadding="false"
+        android:text="@string/book_language"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yearTxt" />
+
+    <TextView
+        android:id="@+id/langTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/langLabelTxt"
+        tools:text="@string/sample" />
+
+    <TextView
+        android:id="@+id/isbn10LabelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/langTxt"
+        android:layout_marginTop="15dp"
+        android:text="@string/book_isbn10"/>
+
+    <TextView
+        android:id="@+id/isbn10Txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/isbn10LabelTxt"
+        tools:text="@string/sample"/>
+
+    <TextView
+        android:id="@+id/isbn13LabelTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/isbn10Txt"
+        android:layout_marginTop="15dp"
+        android:text="@string/book_isbn13"/>
+
+    <TextView
+        android:id="@+id/isbn13Txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/isbn13LabelTxt"
+        tools:text="@string/sample"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

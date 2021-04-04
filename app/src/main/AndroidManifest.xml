@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.chani.mylibrarykt">
+
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -17,9 +24,22 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
+        <activity
+            android:name=".ui.BookCollectionActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".ui.BookDetailActivity" />
+
+        <provider
+            android:name=".provider.QuickSearchProvider"
+            android:authorities="com.chani.mylibrarykt.provider.QuickSearchProvider"
+            android:exported="false" />
     </application>
 </manifest>

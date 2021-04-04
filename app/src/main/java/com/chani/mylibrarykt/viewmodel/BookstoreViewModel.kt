@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data.remote.viewmodel
+package com.chani.mylibrarykt.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

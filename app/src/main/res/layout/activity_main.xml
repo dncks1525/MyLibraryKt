@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:padding="15dp"
+    android:padding="10dp"
     tools:context=".ui.MainActivity">
 
-    <EditText
-        android:id="@+id/searchEdt"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/quickSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints="@string/sample"
-        android:hint="Search"
-        android:inputType="text"
+        android:layout_marginTop="10dp"
+        app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Search book" />
 
     <HorizontalScrollView
         android:id="@+id/chipGroupScroll"
@@ -29,7 +28,7 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchEdt"
+        app:layout_constraintTop_toBottomOf="@id/quickSearch"
         tools:background="#FFA5A5"
         tools:layout_height="50dp">
 
@@ -45,14 +44,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookstoreRecycler"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:scrollbars="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chipGroupScroll"
-        tools:listitem="@layout/item_book_simple" />
+        tools:listitem="@layout/item_bookstore" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
