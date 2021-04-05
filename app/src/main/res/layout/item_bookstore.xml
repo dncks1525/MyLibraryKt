@@ -56,6 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleAreaCst"
-        tools:listitem="@layout/item_books" />
+        tools:listitem="@layout/item_book" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

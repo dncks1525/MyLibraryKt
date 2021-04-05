@@ -10,7 +10,6 @@ import com.chani.mylibrarykt.ui.BookCollectionActivity
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -38,7 +37,7 @@ class BookstoreAdapter(
         fun bind(data: String) = with(binding) {
             titleTxt.text = data
 
-            val adapter = BooksAdapter()
+            val adapter = BookAdapter()
             booksRecycler.setHasFixedSize(true)
             booksRecycler.adapter = adapter
             CoroutineScope(Dispatchers.IO).launch {

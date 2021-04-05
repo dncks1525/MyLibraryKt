@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
-import com.chani.mylibrarykt.adapter.BooksAdapter
+import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.databinding.ActivityBookCollectionBinding
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ class BookCollectionActivity : AppCompatActivity() {
             intent.getStringExtra(AppConst.EXTRA_TITLE)?.let { title ->
                 titleTxt.text = title
 
-                val adapter = BooksAdapter()
+                val adapter = BookAdapter()
                 booksRecycler.adapter = adapter
                 lifecycleScope.launch {
                     bookstoreViewModel.search(title).collectLatest {

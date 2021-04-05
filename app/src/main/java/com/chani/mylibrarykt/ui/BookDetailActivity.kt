@@ -1,10 +1,12 @@
 package com.chani.mylibrarykt.ui
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.data.remote.BookstoreApi
@@ -24,18 +26,21 @@ class BookDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            backImgBtn.setOnClickListener { finish() }
+            backImgBtn.setOnClickListener { supportFinishAfterTransition() }
+
+            intent.getByteArrayExtra(AppConst.EXTRA_COVER)?.let {
+                coverImg.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
+            }
 
             intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
                 lifecycleScope.launch {
-                    with(api.getBookDetail(isbn)) {
-                        Glide.with(root)
-                            .load(image)
-                            .placeholder(R.drawable.book_placeholder)
-                            .centerCrop()
-                            .thumbnail(0.3f)
-                            .into(coverImg)
+                    root.children.forEach { v ->
+                        if (v != coverImg) {
+                            v.visibility = View.INVISIBLE
+                        }
+                    }
 
+                    with(api.getBookDetail(isbn)) {
                         titleTxt.text = title
                         subtitleTxt.text = subtitle
                         authorTxt.text = authors
@@ -48,6 +53,17 @@ class BookDetailActivity : AppCompatActivity() {
                         langTxt.text = language
                         isbn10Txt.text = isbn10
                         isbn13Txt.text = isbn13
+
+                        root.children.forEach { v ->
+                            if (v.visibility == View.INVISIBLE) {
+                                v.visibility = View.VISIBLE
+                                v.alpha = 0f
+                                v.animate()
+                                    .alpha(1f)
+                                    .setDuration(300L)
+                                    .start()
+                            }
+                        }
                     }
                 }
             }

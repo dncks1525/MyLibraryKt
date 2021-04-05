@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RemoteModule {
+object RemoteModule {
     @Provides
     fun getBookstoreApi() = Retrofit.Builder()
         .baseUrl(AppConst.IT_BOOK_STORE_BASE_URL)

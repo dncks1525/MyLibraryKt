@@ -51,6 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleHorDividerView"
         app:spanCount="3"
-        tools:listitem="@layout/item_books" />
+        tools:listitem="@layout/item_book" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
