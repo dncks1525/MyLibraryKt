@@ -6,6 +6,5 @@
 
     <color name="app_text_normal">#000000</color>
 
-    <color name="book_line_view_background">#A39C9C</color>
-
+    <color name="divider_normal">#777777</color>
 </resources>

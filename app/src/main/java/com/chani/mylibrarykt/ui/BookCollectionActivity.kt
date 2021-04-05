@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.adapter.BooksAdapter
 import com.chani.mylibrarykt.databinding.ActivityBookCollectionBinding
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
@@ -22,7 +23,9 @@ class BookCollectionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            intent.getStringExtra("title")?.let { title ->
+            backImgBtn.setOnClickListener { finish() }
+
+            intent.getStringExtra(AppConst.EXTRA_TITLE)?.let { title ->
                 titleTxt.text = title
 
                 val adapter = BooksAdapter()
@@ -32,10 +35,6 @@ class BookCollectionActivity : AppCompatActivity() {
                         adapter.submitData(it)
                     }
                 }
-            }
-
-            backImgBtn.setOnClickListener {
-                finish()
             }
         }
     }

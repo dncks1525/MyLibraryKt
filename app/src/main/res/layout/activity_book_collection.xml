@@ -18,12 +18,11 @@
 
     <TextView
         android:id="@+id/titleTxt"
+        style="@style/AppText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,11 +31,11 @@
         tools:text="@string/sample" />
 
     <View
-        android:id="@+id/lineView2"
+        android:id="@+id/titleHorDividerView"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider_size"
         android:layout_marginTop="10dp"
-        android:background="#777777"
+        android:background="@color/divider_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTxt" />
@@ -50,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lineView2"
+        app:layout_constraintTop_toBottomOf="@id/titleHorDividerView"
         app:spanCount="3"
         tools:listitem="@layout/item_books" />
 

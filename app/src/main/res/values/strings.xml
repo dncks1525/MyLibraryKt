@@ -4,11 +4,13 @@
 
     <string name="search_hint">Search Book</string>
 
-    <string name="book_page">pages</string>
+    <string name="book_page">p</string>
     <string name="book_publisher">Publisher</string>
     <string name="book_language">Language</string>
     <string name="book_year">Year</string>
-    <string name="book_isbn10">isbn10</string>
-    <string name="book_isbn13">isbn13</string>
+    <string name="book_isbn10">ISBN10</string>
+    <string name="book_isbn13">ISBN13</string>
+    <string name="book_buy">%1$s BUY</string>
+    <string name="book_describe">Describe</string>
 
 </resources>

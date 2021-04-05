@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.databinding.ItemBookstoreBinding
 import com.chani.mylibrarykt.ui.BookCollectionActivity
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
@@ -55,7 +56,7 @@ class BookstoreAdapter(
             titleAreaCst.setOnClickListener {
                 val ctx = root.context
                 with(Intent(ctx, BookCollectionActivity::class.java)) {
-                    putExtra("title", data)
+                    putExtra(AppConst.EXTRA_TITLE, data)
                     ctx.startActivity(this)
                 }
             }

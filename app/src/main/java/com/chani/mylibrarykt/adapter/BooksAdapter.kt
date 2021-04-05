@@ -7,6 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.data.remote.model.Book
 import com.chani.mylibrarykt.databinding.ItemBooksBinding
@@ -40,7 +41,7 @@ class BooksAdapter : PagingDataAdapter<Book, BooksAdapter.BooksHolder>(BooksComp
                 root.setOnClickListener {
                     val ctx = root.context
                     with(Intent(ctx, BookDetailActivity::class.java)) {
-                        putExtra("isbn", book.isbn13)
+                        putExtra(AppConst.EXTRA_ISBN, book.isbn13)
                         ctx.startActivity(this)
                     }
                 }

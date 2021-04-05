@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.data.remote.BookstoreApi
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
@@ -23,34 +24,30 @@ class BookDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            backImgBtn.setOnClickListener {
-                finish()
-            }
+            backImgBtn.setOnClickListener { finish() }
 
-            intent.getStringExtra("isbn")?.let { isbn ->
+            intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
                 lifecycleScope.launch {
-                    api.getBookDetail(isbn).also { bookDetail ->
-                        with(bookDetail) {
-                            titleTxt.text = title
-                            subtitleTxt.text = subtitle
-                            authorTxt.text = authors
-                            yearTxt.text = year
-                            publisherTxt.text = publisher
-                            describeTxt.text = desc
-                            pagesTxt.text = pages
-                            ratingTxt.text = rating
-                            buyBtn.text = "$price BUY"
-                            langTxt.text = language
-                            isbn10Txt.text = isbn10
-                            isbn13Txt.text = isbn13
+                    with(api.getBookDetail(isbn)) {
+                        Glide.with(root)
+                            .load(image)
+                            .placeholder(R.drawable.book_placeholder)
+                            .centerCrop()
+                            .thumbnail(0.3f)
+                            .into(coverImg)
 
-                            Glide.with(root)
-                                .load(image)
-                                .placeholder(R.drawable.book_placeholder)
-                                .centerCrop()
-                                .thumbnail(0.1f)
-                                .into(coverImg)
-                        }
+                        titleTxt.text = title
+                        subtitleTxt.text = subtitle
+                        authorTxt.text = authors
+                        ratingTxt.text = rating
+                        pagesTxt.text = pages
+                        buyBtn.text = resources.getString(R.string.book_buy).format(price)
+                        describeTxt.text = desc
+                        yearTxt.text = year
+                        publisherTxt.text = publisher
+                        langTxt.text = language
+                        isbn10Txt.text = isbn10
+                        isbn13Txt.text = isbn13
                     }
                 }
             }

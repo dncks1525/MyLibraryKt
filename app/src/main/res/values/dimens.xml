@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="book_simple_width">120dp</dimen>
-    <dimen name="book_simple_height">180dp</dimen>
-    <dimen name="book_simple_cover_img_width">120dp</dimen>
-    <dimen name="book_simple_cover_img_height">160dp</dimen>
+    <dimen name="divider_size">1dp</dimen>
 </resources>
