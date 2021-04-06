@@ -3,6 +3,8 @@
     <string name="sample">Sample</string>
 
     <string name="transition_cover_img">transition coverImg</string>
+    <string name="transition_quick_search">transition quickSearch</string>
+
     <string name="search_hint">Search Book</string>
 
     <string name="book_page">p</string>

@@ -35,7 +35,12 @@
         <activity
             android:name=".ui.BookCollectionActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ui.BookDetailActivity" />
+        <activity
+            android:name=".ui.BookDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.SearchActivity"
+            android:launchMode="singleTop" />
 
         <provider
             android:name=".provider.QuickSearchProvider"

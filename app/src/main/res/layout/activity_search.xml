@@ -5,54 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.SearchActivity">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/quickSearch"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:transitionName="@string/transition_quick_search"
-        app:defaultQueryHint="@string/search_hint"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bookRecycler"
         app:queryHint="@string/search_hint" />
 
-    <HorizontalScrollView
-        android:id="@+id/chipGroupScroll"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quickSearch"
-        tools:background="#B4B5B6"
-        tools:layout_height="50dp">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:singleLine="true"
-            app:singleSelection="true" />
-
-    </HorizontalScrollView>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bookstoreRecycler"
+        android:id="@+id/bookRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipGroupScroll"
-        tools:listitem="@layout/item_bookstore" />
+        tools:listitem="@layout/item_book_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

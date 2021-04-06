@@ -1,17 +1,19 @@
 package com.chani.mylibrarykt.ui
 
+import android.app.ActivityOptions
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
-import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.chani.mylibrarykt.adapter.BookstoreAdapter
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -22,8 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    val TAG = "dncks"
-
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -53,28 +53,56 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initQuickSearch() = with(binding) {
-        searchRecentSuggestions.clearHistory()
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        with(quickSearch) {
+//            searchRecentSuggestions.clearHistory()
+//
+//            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    if (query != null) {
+//                        AppLog.d(query)
+//                        searchRecentSuggestions.saveRecentQuery(query, null)
+//                    }
+//                    return true
+//                }
+//
+//                override fun onQueryTextChange(newText: String?): Boolean {
+//                    return true
+//                }
+//            })
+//
+//            findViewById<View>(androidx.appcompat.R.id.search_close_btn)?.setOnClickListener {
+//                setQuery("", false)
+//                clearFocus()
+//            }
+//        }
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        quickSearch.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        quickSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    Log.d(TAG, "onQueryTextSubmit: $it")
-                    searchRecentSuggestions.saveRecentQuery(it, null)
+        with(quickSearch) {
+            val onClick = {v: View? -> {
+                v?.setOnClickListener {
+                    Intent(this@MainActivity, SearchActivity::class.java).apply {
+                        val options = ActivityOptions.makeSceneTransitionAnimation(
+                            this@MainActivity, quickSearch,
+                            quickSearch.transitionName
+                        )
+                        startActivity(this, options.toBundle())
+                    }
                 }
-                return true
-            }
+            }}
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return true
+//            findViewById<EditText>(androidx.appcompat.R.id.search_edit_frame)?.setOnClickListener(onClick)
+        }
+
+        quickSearch.setOnClickListener {
+            Intent(this@MainActivity, SearchActivity::class.java).apply {
+                val options = ActivityOptions.makeSceneTransitionAnimation(
+                    this@MainActivity, quickSearch,
+                    quickSearch.transitionName
+                )
+                startActivity(this, options.toBundle())
             }
-        })
-        (quickSearch.findViewById(androidx.appcompat.R.id.search_close_btn) as View?)
-            ?.setOnClickListener {
-                quickSearch.setQuery("", false)
-                quickSearch.clearFocus()
-            }
+        }
     }
 
     private fun initBookstore() = with(binding) {

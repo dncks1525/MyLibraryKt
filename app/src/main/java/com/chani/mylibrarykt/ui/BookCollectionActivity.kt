@@ -29,7 +29,7 @@ class BookCollectionActivity : AppCompatActivity() {
                 titleTxt.text = title
 
                 val adapter = BookAdapter()
-                booksRecycler.adapter = adapter
+                bookRecycler.adapter = adapter
                 lifecycleScope.launch {
                     bookstoreViewModel.search(title).collectLatest {
                         adapter.submitData(it)

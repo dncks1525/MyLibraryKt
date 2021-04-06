@@ -34,19 +34,19 @@ class BookstoreAdapter(
     inner class BookstoreHolder(
         private val binding: ItemBookstoreBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: String) = with(binding) {
-            titleTxt.text = data
+        fun bind(title: String) = with(binding) {
+            titleTxt.text = title
 
             val adapter = BookAdapter()
-            booksRecycler.setHasFixedSize(true)
-            booksRecycler.adapter = adapter
+            bookRecycler.setHasFixedSize(true)
+            bookRecycler.adapter = adapter
             CoroutineScope(Dispatchers.IO).launch {
-                if (data == "New Releases") {
+                if (title == "New Releases") {
                     bookstoreViewModel.getNewBooks().collectLatest {
                         adapter.submitData(it)
                     }
                 } else {
-                    bookstoreViewModel.search(data).collectLatest {
+                    bookstoreViewModel.search(title).collectLatest {
                         adapter.submitData(it)
                     }
                 }
@@ -55,7 +55,7 @@ class BookstoreAdapter(
             titleAreaCst.setOnClickListener {
                 val ctx = root.context
                 with(Intent(ctx, BookCollectionActivity::class.java)) {
-                    putExtra(AppConst.EXTRA_TITLE, data)
+                    putExtra(AppConst.EXTRA_TITLE, title)
                     ctx.startActivity(this)
                 }
             }

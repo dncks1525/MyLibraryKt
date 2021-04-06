@@ -6,24 +6,36 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
+import com.chani.mylibrarykt.data.enum.BookType
 import com.chani.mylibrarykt.data.remote.model.Book
 import com.chani.mylibrarykt.databinding.ItemBookBinding
+import com.chani.mylibrarykt.databinding.ItemBookListBinding
 import com.chani.mylibrarykt.ui.BookDetailActivity
 import java.io.ByteArrayOutputStream
 
-class BookAdapter : PagingDataAdapter<Book, BookAdapter.BookHolder>(BooksComparator()) {
+class BookAdapter(
+    private val type: BookType = BookType.FRAME
+) : PagingDataAdapter<Book, BookAdapter.BookHolder>(BooksComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
-        return BookHolder(
-            ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        return when(type) {
+            BookType.FRAME -> BookHolder(
+                ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+            BookType.LIST -> BookHolder(
+                ItemBookListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: BookHolder, position: Int) {
@@ -31,31 +43,49 @@ class BookAdapter : PagingDataAdapter<Book, BookAdapter.BookHolder>(BooksCompara
     }
 
     inner class BookHolder(
-        private val binding: ItemBookBinding
+        private val binding: ViewBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Book?) = with(binding) {
-            data?.let { book ->
-                titleTxt.text = book.title
-                priceTxt.text = book.price
-                Glide.with(binding.root)
-                    .load(book.image)
-                    .placeholder(R.drawable.book_placeholder)
-                    .centerCrop()
-                    .thumbnail(0.3f)
-                    .into(coverImg)
+        fun bind(book: Book) {
+            lateinit var titleTxt: TextView
+            lateinit var priceTxt: TextView
+            lateinit var coverImg: ImageView
+            lateinit var root: ViewGroup
+            when (binding) {
+                is ItemBookBinding -> {
+                    titleTxt = binding.titleTxt
+                    priceTxt = binding.priceTxt
+                    coverImg = binding.coverImg
+                    root = binding.root
+                }
+                is ItemBookListBinding -> {
+                    titleTxt = binding.titleTxt
+                    priceTxt = binding.priceTxt
+                    coverImg = binding.coverImg
+                    root = binding.root
+                }
+                else -> return
+            }
 
-                root.setOnClickListener {
-                    val ctx = root.context
-                    with(Intent(ctx, BookDetailActivity::class.java)) {
-                        putExtra(AppConst.EXTRA_ISBN, book.isbn13)
-                        putExtra(AppConst.EXTRA_COVER, toByteArray(coverImg))
-                        val options = ActivityOptions.makeSceneTransitionAnimation(
-                            (root.context as Activity),
-                            coverImg,
-                            coverImg.transitionName
-                        )
-                        ctx.startActivity(this, options.toBundle())
-                    }
+            titleTxt.text = book.title
+            priceTxt.text = book.price
+            Glide.with(binding.root)
+                .load(book.image)
+                .placeholder(R.drawable.book_placeholder)
+                .centerCrop()
+                .thumbnail(0.3f)
+                .into(coverImg)
+
+            root.setOnClickListener {
+                val ctx = root.context
+                with(Intent(ctx, BookDetailActivity::class.java)) {
+                    putExtra(AppConst.EXTRA_ISBN, book.isbn13)
+                    putExtra(AppConst.EXTRA_COVER, toByteArray(coverImg))
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        (root.context as Activity),
+                        coverImg,
+                        coverImg.transitionName
+                    )
+                    ctx.startActivity(this, options.toBundle())
                 }
             }
         }
