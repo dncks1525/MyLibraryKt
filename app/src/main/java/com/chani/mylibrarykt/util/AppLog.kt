@@ -3,7 +3,7 @@ package com.chani.mylibrarykt.util
 import android.util.Log
 
 object AppLog {
-    const val TAG = "chani"
+    const val TAG = "dncks1525"
 
     var inspection: Inspection = Inspection.DEBUG
 

@@ -47,4 +47,22 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="BookListText" parent="AppText">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="BookListText.Title">
+        <item name="android:maxLines">2</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="BookListText.Subtitle">
+        <item name="android:maxLines">2</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textColor">#707070</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

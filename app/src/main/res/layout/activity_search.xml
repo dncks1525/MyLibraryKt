@@ -10,14 +10,14 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/quickSearch"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:transitionName="@string/transition_quick_search"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bookRecycler"
+        app:searchIcon="@drawable/ic_baseline_arrow_back"
         app:queryHint="@string/search_hint" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -25,10 +25,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:layout_marginEnd="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quickSearch"
         tools:listitem="@layout/item_book_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

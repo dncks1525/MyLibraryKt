@@ -46,19 +46,22 @@ class BookAdapter(
         private val binding: ViewBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(book: Book) {
-            lateinit var titleTxt: TextView
-            lateinit var priceTxt: TextView
-            lateinit var coverImg: ImageView
-            lateinit var root: ViewGroup
+            val titleTxt: TextView?
+            val subtitleTxt: TextView?
+            val priceTxt: TextView?
+            val coverImg: ImageView?
+            val root: ViewGroup?
             when (binding) {
                 is ItemBookBinding -> {
                     titleTxt = binding.titleTxt
+                    subtitleTxt = null
                     priceTxt = binding.priceTxt
                     coverImg = binding.coverImg
                     root = binding.root
                 }
                 is ItemBookListBinding -> {
                     titleTxt = binding.titleTxt
+                    subtitleTxt = binding.subtitleTxt
                     priceTxt = binding.priceTxt
                     coverImg = binding.coverImg
                     root = binding.root
@@ -67,6 +70,7 @@ class BookAdapter(
             }
 
             titleTxt.text = book.title
+            subtitleTxt?.text = book.subtitle
             priceTxt.text = book.price
             Glide.with(binding.root)
                 .load(book.image)
