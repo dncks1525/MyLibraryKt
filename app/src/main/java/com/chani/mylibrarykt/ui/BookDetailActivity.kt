@@ -3,23 +3,32 @@ package com.chani.mylibrarykt.ui
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
+import com.chani.mylibrarykt.data.local.dao.UserDao
+import com.chani.mylibrarykt.data.local.entity.User
 import com.chani.mylibrarykt.data.remote.BookstoreApi
+import com.chani.mylibrarykt.data.remote.model.BookDetail
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookDetailActivity : AppCompatActivity() {
     private val binding: ActivityBookDetailBinding by lazy { ActivityBookDetailBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var api: BookstoreApi
+    @Inject lateinit var bookstoreApi: BookstoreApi
+    @Inject lateinit var userDao: UserDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +36,13 @@ class BookDetailActivity : AppCompatActivity() {
 
         with(binding) {
             backImgBtn.setOnClickListener { supportFinishAfterTransition() }
+            buyBtn.setOnClickListener {
+                Toast.makeText(this@BookDetailActivity, "Thank you!", Toast.LENGTH_SHORT).show()
+            }
 
-            intent.getByteArrayExtra(AppConst.EXTRA_COVER)?.let {
-                coverImg.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
+            val imgByteArray = intent.getByteArrayExtra(AppConst.EXTRA_COVER)
+            if (imgByteArray != null) {
+                coverImg.setImageBitmap(BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size))
             }
 
             intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
@@ -40,7 +53,7 @@ class BookDetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    with(api.getBookDetail(isbn)) {
+                    val bookDetail = bookstoreApi.getBookDetail(isbn).apply {
                         titleTxt.text = title
                         subtitleTxt.text = subtitle
                         authorTxt.text = authors
@@ -65,8 +78,32 @@ class BookDetailActivity : AppCompatActivity() {
                             }
                         }
                     }
+
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        if (imgByteArray != null) {
+                            saveToDatabase(imgByteArray, bookDetail)
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private fun saveToDatabase(arr: ByteArray, bookDetail: BookDetail) {
+        val imgFile = File(filesDir, "${bookDetail.isbn13}.png")
+        if (!imgFile.exists()) {
+            try {
+                FileOutputStream(imgFile).apply {
+                    write(arr)
+                    flush()
+                    close()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        val timestamp = Calendar.getInstance().timeInMillis
+        userDao.insert(User(bookDetail, imgFile.path, timestamp))
     }
 }

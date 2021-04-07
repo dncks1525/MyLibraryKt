@@ -82,6 +82,7 @@ class SearchActivity : AppCompatActivity() {
                 })
 
                 findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon).setOnClickListener {
+                    clearFocus()
                     supportFinishAfterTransition()
                 }
             }

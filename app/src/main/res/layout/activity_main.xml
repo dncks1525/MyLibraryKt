@@ -7,6 +7,25 @@
     android:padding="10dp"
     tools:context=".ui.MainActivity">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/logoImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon"
+        app:shapeAppearanceOverlay="@style/ShapeImageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/mainGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="quickSearch,bookstoreRecycler,chipGroupScroll"
+        tools:visibility="visible" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/quickSearch"
         android:layout_width="0dp"
@@ -54,5 +73,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chipGroupScroll"
         tools:listitem="@layout/item_bookstore" />
+
+    <ImageButton
+        android:id="@+id/recentBookImgBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_recent_book"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:src="@drawable/book_sample" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

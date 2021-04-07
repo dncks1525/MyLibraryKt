@@ -2,6 +2,9 @@ package com.chani.mylibrarykt.di.module
 
 import android.content.Context
 import android.provider.SearchRecentSuggestions
+import androidx.room.Room
+import com.chani.mylibrarykt.data.local.UserDb
+import com.chani.mylibrarykt.data.local.dao.UserDao
 import com.chani.mylibrarykt.provider.QuickSearchProvider
 import dagger.Module
 import dagger.Provides
@@ -15,5 +18,10 @@ object ActivityModule {
     @Provides
     fun provideSearchRecentSuggestions(@ApplicationContext ctx: Context): SearchRecentSuggestions {
         return SearchRecentSuggestions(ctx, QuickSearchProvider.AUTH, QuickSearchProvider.MODE)
+    }
+
+    @Provides
+    fun provideUserDatabase(@ApplicationContext ctx: Context): UserDao {
+        return Room.databaseBuilder(ctx, UserDb::class.java, "UserDb").build().getUserDao()
     }
 }

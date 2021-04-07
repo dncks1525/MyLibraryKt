@@ -19,6 +19,11 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:textColor">@color/app_text_normal</item>
     </style>
+    
+    <style name="ShapeImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
 
     <style name="BookDetailText" parent="AppText">
         <item name="android:textSize">13sp</item>

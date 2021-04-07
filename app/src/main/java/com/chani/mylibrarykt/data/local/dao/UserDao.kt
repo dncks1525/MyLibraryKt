@@ -5,8 +5,11 @@ import com.chani.mylibrarykt.data.local.entity.User
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM User ORDER BY timestamp ASC")
+    @Query("SELECT * FROM User ORDER BY timestamp DESC")
     fun getAll(): List<User>
+
+    @Query("SELECT * FROM user ORDER BY timestamp DESC LIMIT 1")
+    fun getLast(): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.databinding.ItemBookstoreBinding
 import com.chani.mylibrarykt.ui.BookCollectionActivity
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
