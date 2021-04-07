@@ -5,12 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
+import android.view.View
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.chani.mylibrarykt.adapter.BookAdapter
+import com.chani.mylibrarykt.adapter.BookFooterAdapter
 import com.chani.mylibrarykt.data.enum.BookType
 import com.chani.mylibrarykt.databinding.ActivitySearchBinding
 import com.chani.mylibrarykt.util.AppLog
@@ -32,9 +36,28 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            val adapter = BookAdapter(BookType.LIST)
+            val bookAdapter = BookAdapter(BookType.LIST).apply {
+                lifecycleScope.launch {
+                    loadStateFlow.collectLatest { state ->
+                        if (state.refresh == LoadState.Loading) {
+                            loadingProgress.visibility = View.VISIBLE
+                        } else {
+                            if (loadingProgress.isVisible) {
+                                if (itemCount == 0) {
+                                    noContentsTxt.visibility = View.VISIBLE
+                                } else {
+                                    searchRecentSuggestions.saveRecentQuery(quickSearch.query.toString(), null)
+                                }
+
+                                loadingProgress.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
+            }
+            val bookFooterAdapter = BookFooterAdapter(bookAdapter::retry)
+            bookRecycler.adapter = bookAdapter.withLoadStateFooter(bookFooterAdapter)
             bookRecycler.setHasFixedSize(true)
-            bookRecycler.adapter = adapter
 
             val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
             with(quickSearch) {
@@ -44,11 +67,9 @@ class SearchActivity : AppCompatActivity() {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         if (query != null) {
                             clearFocus()
-                            searchRecentSuggestions.saveRecentQuery(query, null)
-
                             lifecycleScope.launch {
                                 bookstoreViewModel.search(query).collectLatest {
-                                    adapter.submitData(it)
+                                    bookAdapter.submitData(it)
                                 }
                             }
                         }
@@ -71,7 +92,6 @@ class SearchActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                AppLog.d("query = $query")
                 binding.quickSearch.setQuery(query, false)
                 binding.quickSearch.clearFocus()
             }

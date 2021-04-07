@@ -37,17 +37,18 @@ class BookstoreAdapter(
         fun bind(title: String) = with(binding) {
             titleTxt.text = title
 
-            val adapter = BookAdapter()
+            val bookAdapter = BookAdapter()
+            bookRecycler.adapter = bookAdapter
             bookRecycler.setHasFixedSize(true)
-            bookRecycler.adapter = adapter
+
             CoroutineScope(Dispatchers.IO).launch {
                 if (title == "New Releases") {
                     bookstoreViewModel.getNewBooks().collectLatest {
-                        adapter.submitData(it)
+                        bookAdapter.submitData(it)
                     }
                 } else {
                     bookstoreViewModel.search(title).collectLatest {
-                        adapter.submitData(it)
+                        bookAdapter.submitData(it)
                     }
                 }
             }

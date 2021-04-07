@@ -16,14 +16,14 @@ class BookstoreRepository @Inject constructor(
 ) {
     fun getNewBooks(): Flow<PagingData<Book>> {
         return Pager(
-            config = PagingConfig(pageSize = 1),
+            config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { NewBooksPagingSource(api) }
         ).flow
     }
 
     fun search(query: String): Flow<PagingData<Book>> {
         return Pager(
-            config = PagingConfig(pageSize = 1),
+            config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { SearchPagingSource(api, query) }
         ).flow
     }
