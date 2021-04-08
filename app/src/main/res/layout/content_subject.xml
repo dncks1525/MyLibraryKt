@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <ImageButton
+        android:id="@+id/backImgbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_baseline_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/titleTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/titleTxt" />
+
+    <TextView
+        android:id="@+id/titleTxt"
+        style="@style/AppText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/backImgbtn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/sample" />
+
+    <View
+        android:id="@+id/titleHorDividerView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTxt" />
+
+</merge>

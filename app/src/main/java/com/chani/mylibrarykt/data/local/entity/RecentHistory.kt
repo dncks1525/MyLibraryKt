@@ -6,7 +6,7 @@ import com.chani.mylibrarykt.data.remote.model.Book
 import com.chani.mylibrarykt.data.remote.model.BookDetail
 
 @Entity
-data class User(
+data class RecentHistory(
     val bookDetail: BookDetail,
     val coverImgPath: String,
     val timestamp: Long,

@@ -9,8 +9,8 @@ import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
-import com.chani.mylibrarykt.data.local.dao.UserDao
-import com.chani.mylibrarykt.data.local.entity.User
+import com.chani.mylibrarykt.data.local.dao.RecentHistoryDao
+import com.chani.mylibrarykt.data.local.entity.RecentHistory
 import com.chani.mylibrarykt.data.remote.BookstoreApi
 import com.chani.mylibrarykt.data.remote.model.BookDetail
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
@@ -28,14 +28,14 @@ class BookDetailActivity : AppCompatActivity() {
     private val binding: ActivityBookDetailBinding by lazy { ActivityBookDetailBinding.inflate(layoutInflater) }
 
     @Inject lateinit var bookstoreApi: BookstoreApi
-    @Inject lateinit var userDao: UserDao
+    @Inject lateinit var recentHistoryDao: RecentHistoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         with(binding) {
-            backImgBtn.setOnClickListener { supportFinishAfterTransition() }
+            backImgbtn.setOnClickListener { supportFinishAfterTransition() }
             buyBtn.setOnClickListener {
                 Toast.makeText(this@BookDetailActivity, "Thank you!", Toast.LENGTH_SHORT).show()
             }
@@ -81,7 +81,7 @@ class BookDetailActivity : AppCompatActivity() {
 
                     lifecycleScope.launch(Dispatchers.IO) {
                         if (imgByteArray != null) {
-                            saveToDatabase(imgByteArray, bookDetail)
+                            saveToRecentHistoryDatabase(imgByteArray, bookDetail)
                         }
                     }
                 }
@@ -89,7 +89,7 @@ class BookDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToDatabase(arr: ByteArray, bookDetail: BookDetail) {
+    private fun saveToRecentHistoryDatabase(arr: ByteArray, bookDetail: BookDetail) {
         val imgFile = File(filesDir, "${bookDetail.isbn13}.png")
         if (!imgFile.exists()) {
             try {
@@ -104,6 +104,6 @@ class BookDetailActivity : AppCompatActivity() {
         }
 
         val timestamp = Calendar.getInstance().timeInMillis
-        userDao.insert(User(bookDetail, imgFile.path, timestamp))
+        recentHistoryDao.insert(RecentHistory(bookDetail, imgFile.path, timestamp))
     }
 }

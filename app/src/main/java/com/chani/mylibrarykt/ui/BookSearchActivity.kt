@@ -16,8 +16,7 @@ import androidx.paging.LoadState
 import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.adapter.BookFooterAdapter
 import com.chani.mylibrarykt.data.enum.BookType
-import com.chani.mylibrarykt.databinding.ActivitySearchBinding
-import com.chani.mylibrarykt.util.AppLog
+import com.chani.mylibrarykt.databinding.ActivityBookSearchBinding
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,8 +24,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity() {
-    private val binding: ActivitySearchBinding by lazy { ActivitySearchBinding.inflate(layoutInflater) }
+class BookSearchActivity : AppCompatActivity() {
+    private val binding: ActivityBookSearchBinding by lazy { ActivityBookSearchBinding.inflate(layoutInflater) }
 
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
     @Inject lateinit var searchRecentSuggestions: SearchRecentSuggestions
@@ -93,8 +92,8 @@ class SearchActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                binding.quickSearch.setQuery(query, false)
                 binding.quickSearch.clearFocus()
+                binding.quickSearch.setQuery(query, true)
             }
         }
     }

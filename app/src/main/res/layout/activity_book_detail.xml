@@ -7,7 +7,7 @@
     tools:context=".ui.BookDetailActivity">
 
     <ImageButton
-        android:id="@+id/backImgBtn"
+        android:id="@+id/backImgbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -23,8 +23,8 @@
         android:layout_height="180dp"
         android:layout_marginTop="10dp"
         android:transitionName="@string/transition_cover_img"
-        app:layout_constraintStart_toStartOf="@id/backImgBtn"
-        app:layout_constraintTop_toBottomOf="@id/backImgBtn"
+        app:layout_constraintStart_toStartOf="@id/backImgbtn"
+        app:layout_constraintTop_toBottomOf="@id/backImgbtn"
         tools:src="@drawable/book_sample" />
 
     <TextView

@@ -7,23 +7,43 @@
     android:padding="10dp"
     tools:context=".ui.MainActivity">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/logoGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="logoImg,logoTxt"
+        tools:visibility="gone" />
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/logoImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/icon"
-        app:shapeAppearanceOverlay="@style/ShapeImageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeImageView"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/logoTxt"
+        style="@style/AppText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/app_name"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/mainGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="quickSearch,bookstoreRecycler,chipGroupScroll"
+        app:constraint_referenced_ids="quickSearch,bookstoreRecycler,chipsScroll"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.SearchView
@@ -40,7 +60,7 @@
         app:queryHint="@string/search_hint" />
 
     <HorizontalScrollView
-        android:id="@+id/chipGroupScroll"
+        android:id="@+id/chipsScroll"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -53,7 +73,7 @@
         tools:layout_height="50dp">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+            android:id="@+id/subjectCategoryChips"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,18 +91,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chipGroupScroll"
+        app:layout_constraintTop_toBottomOf="@id/chipsScroll"
         tools:listitem="@layout/item_bookstore" />
 
     <ImageButton
-        android:id="@+id/recentBookImgBtn"
+        android:id="@+id/recentHistoryImgbtn"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/shape_recent_book"
-        android:scaleType="centerInside"
+        android:layout_height="70dp"
+        android:background="@drawable/shape_recent_background"
+        android:scaleType="centerCrop"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@drawable/book_sample" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

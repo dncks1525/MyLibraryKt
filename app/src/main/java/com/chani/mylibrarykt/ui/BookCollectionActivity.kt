@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.databinding.ActivityBookCollectionBinding
+import com.chani.mylibrarykt.databinding.ContentSubjectBinding
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -15,18 +16,19 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class BookCollectionActivity : AppCompatActivity() {
     private val binding: ActivityBookCollectionBinding by lazy { ActivityBookCollectionBinding.inflate(layoutInflater) }
-
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val subjectContent = ContentSubjectBinding.bind(binding.root)
+
         with(binding) {
-            backImgBtn.setOnClickListener { finish() }
+            subjectContent.backImgbtn.setOnClickListener { finish() }
 
             intent.getStringExtra(AppConst.EXTRA_TITLE)?.let { title ->
-                titleTxt.text = title
+                subjectContent.titleTxt.text = title
 
                 val adapter = BookAdapter()
                 bookRecycler.adapter = adapter

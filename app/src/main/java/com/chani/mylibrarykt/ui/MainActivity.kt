@@ -1,7 +1,6 @@
 package com.chani.mylibrarykt.ui
 
 import android.app.ActivityOptions
-import android.app.SearchManager
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -14,9 +13,8 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookstoreAdapter
-import com.chani.mylibrarykt.data.local.dao.UserDao
+import com.chani.mylibrarykt.data.local.dao.RecentHistoryDao
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
-import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
-    @Inject lateinit var userDao: UserDao
+    @Inject lateinit var recentHistoryDao: RecentHistoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +48,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (binding.logoImg.isGone) {
-            updateRecentBook()
+            updateRecentCoverImg()
         }
     }
 
     private fun initQuickSearch() = with(binding) {
         val onClick =  View.OnClickListener {
-            Intent(this@MainActivity, SearchActivity::class.java).apply {
+            Intent(this@MainActivity, BookSearchActivity::class.java).apply {
                 val options = ActivityOptions.makeSceneTransitionAnimation(
                     this@MainActivity, quickSearch,
                     quickSearch.transitionName
@@ -79,12 +77,12 @@ class MainActivity : AppCompatActivity() {
     private fun initBookstore() = with(binding) {
         lifecycleScope.launch {
             delay(2000)
-            logoImg.visibility = View.GONE
+            logoGroup.visibility = View.GONE
             mainGroup.visibility = View.VISIBLE
-            updateRecentBook()
+            updateRecentCoverImg()
         }
 
-        val dataList = mutableListOf<String>().apply {
+        val subjectCategories = mutableListOf<String>().apply {
             add("New Releases")
             add("Android")
             add("Kotlin")
@@ -92,39 +90,39 @@ class MainActivity : AppCompatActivity() {
             add("Rust")
             add("Python")
         }
-        dataList.forEach { book ->
+        subjectCategories.forEach { book ->
             val bookChip = Chip(this@MainActivity).apply {
                 text = book
                 setOnClickListener { v ->
                     when (v) {
                         is Chip -> {
-                            val idx = dataList.indexOf(v.text)
+                            val idx = subjectCategories.indexOf(v.text)
                             bookstoreRecycler.smoothScrollToPosition(idx)
                         }
                     }
                 }
             }
-            chipGroup.addView(bookChip)
+            subjectCategoryChips.addView(bookChip)
         }
 
         bookstoreRecycler.setHasFixedSize(true)
-        bookstoreRecycler.adapter = BookstoreAdapter(dataList, bookstoreViewModel)
+        bookstoreRecycler.adapter = BookstoreAdapter(subjectCategories, bookstoreViewModel)
     }
 
-    private fun updateRecentBook() = lifecycleScope.launch(Dispatchers.IO) {
-        userDao.getLast()?.let { user ->
+    private fun updateRecentCoverImg() = lifecycleScope.launch(Dispatchers.IO) {
+        recentHistoryDao.getLast()?.let { user ->
             if (File(user.coverImgPath).exists()) {
                 val bmp = BitmapFactory.decodeFile(user.coverImgPath)
                 lifecycleScope.launch {
-                    binding.recentBookImgBtn.setImageDrawable(BitmapDrawable(resources, bmp))
-                    if (binding.recentBookImgBtn.isGone) {
-                        binding.recentBookImgBtn.visibility = View.VISIBLE
+                    binding.recentHistoryImgbtn.setImageDrawable(BitmapDrawable(resources, bmp))
+                    if (binding.recentHistoryImgbtn.isGone) {
+                        binding.recentHistoryImgbtn.visibility = View.VISIBLE
                     }
                 }
             } else {
                 lifecycleScope.launch {
-                    if (binding.recentBookImgBtn.isVisible) {
-                        binding.recentBookImgBtn.visibility = View.GONE
+                    if (binding.recentHistoryImgbtn.isVisible) {
+                        binding.recentHistoryImgbtn.visibility = View.GONE
                     }
                 }
             }
