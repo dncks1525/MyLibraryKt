@@ -13,8 +13,9 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookstoreAdapter
-import com.chani.mylibrarykt.data.local.dao.RecentHistoryDao
+import com.chani.mylibrarykt.data.repository.local.dao.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
-    @Inject lateinit var recentHistoryDao: RecentHistoryDao
+    @Inject lateinit var historyDao: HistoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,13 +111,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateRecentCoverImg() = lifecycleScope.launch(Dispatchers.IO) {
-        recentHistoryDao.getLast()?.let { user ->
+        historyDao.getLastHistory()?.let { user ->
             if (File(user.coverImgPath).exists()) {
                 val bmp = BitmapFactory.decodeFile(user.coverImgPath)
                 lifecycleScope.launch {
-                    binding.recentHistoryImgbtn.setImageDrawable(BitmapDrawable(resources, bmp))
-                    if (binding.recentHistoryImgbtn.isGone) {
-                        binding.recentHistoryImgbtn.visibility = View.VISIBLE
+                    binding.recentHistoryImgbtn.apply {
+                        if (drawable is BitmapDrawable) {
+                            (drawable as BitmapDrawable).bitmap.recycle()
+                        }
+
+                        setImageDrawable(BitmapDrawable(resources, bmp))
+
+                        if (isGone) visibility = View.VISIBLE
+                        if (!hasOnClickListeners()) {
+                            setOnClickListener {
+                                AppLog.d("recentHistoryImgbtn clicked")
+                                Intent(this@MainActivity, RecentHistoryActivity::class.java).apply {
+                                    startActivity(this)
+                                }
+                            }
+                        }
                     }
                 }
             } else {

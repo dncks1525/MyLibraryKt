@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.databinding.ItemBookstoreBinding
 import com.chani.mylibrarykt.ui.BookCollectionActivity
-import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class BookstoreAdapter(
-    private val dataList: List<String>,
+    private val subjectCategories: List<String>,
     private val bookstoreViewModel: BookstoreViewModel,
 ) : RecyclerView.Adapter<BookstoreAdapter.BookstoreHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookstoreHolder {
@@ -25,11 +24,11 @@ class BookstoreAdapter(
     }
 
     override fun onBindViewHolder(holder: BookstoreHolder, position: Int) {
-        holder.bind(dataList[position])
+        holder.bind(subjectCategories[position])
     }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return subjectCategories.size
     }
 
     inner class BookstoreHolder(

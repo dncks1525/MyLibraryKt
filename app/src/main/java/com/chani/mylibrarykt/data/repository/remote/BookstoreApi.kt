@@ -1,7 +1,7 @@
-package com.chani.mylibrarykt.data.remote
+package com.chani.mylibrarykt.data.repository.remote
 
-import com.chani.mylibrarykt.data.remote.model.BookDetail
-import com.chani.mylibrarykt.data.remote.model.Bookstore
+import com.chani.mylibrarykt.data.repository.remote.model.BookDetail
+import com.chani.mylibrarykt.data.repository.remote.model.Bookstore
 import retrofit2.http.GET
 import retrofit2.http.Path
 

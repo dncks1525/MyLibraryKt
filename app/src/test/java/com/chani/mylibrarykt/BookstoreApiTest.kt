@@ -1,6 +1,6 @@
 package com.chani.mylibrarykt
 
-import com.chani.mylibrarykt.data.remote.BookstoreApi
+import com.chani.mylibrarykt.data.repository.remote.BookstoreApi
 import com.google.common.truth.Truth
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

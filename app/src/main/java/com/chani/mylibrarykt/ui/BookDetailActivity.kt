@@ -9,10 +9,10 @@ import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
-import com.chani.mylibrarykt.data.local.dao.RecentHistoryDao
-import com.chani.mylibrarykt.data.local.entity.RecentHistory
-import com.chani.mylibrarykt.data.remote.BookstoreApi
-import com.chani.mylibrarykt.data.remote.model.BookDetail
+import com.chani.mylibrarykt.data.repository.local.dao.HistoryDao
+import com.chani.mylibrarykt.data.repository.local.entity.History
+import com.chani.mylibrarykt.data.repository.remote.BookstoreApi
+import com.chani.mylibrarykt.data.repository.remote.model.BookDetail
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,7 @@ class BookDetailActivity : AppCompatActivity() {
     private val binding: ActivityBookDetailBinding by lazy { ActivityBookDetailBinding.inflate(layoutInflater) }
 
     @Inject lateinit var bookstoreApi: BookstoreApi
-    @Inject lateinit var recentHistoryDao: RecentHistoryDao
+    @Inject lateinit var historyDao: HistoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +104,7 @@ class BookDetailActivity : AppCompatActivity() {
         }
 
         val timestamp = Calendar.getInstance().timeInMillis
-        recentHistoryDao.insert(RecentHistory(bookDetail, imgFile.path, timestamp))
+
+        historyDao.insert(History(bookDetail.toBook(), imgFile.path, timestamp))
     }
 }

@@ -27,15 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.BookCollectionActivity"
             android:launchMode="singleTop" />
-
         <activity
             android:name=".ui.BookDetailActivity"
             android:launchMode="singleTop" />
-
         <activity
             android:name=".ui.BookSearchActivity"
             android:launchMode="singleTop">
@@ -47,6 +44,9 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity
+            android:name=".ui.RecentHistoryActivity"
+            android:launchMode="singleTop" />
 
         <provider
             android:name=".provider.QuickSearchProvider"

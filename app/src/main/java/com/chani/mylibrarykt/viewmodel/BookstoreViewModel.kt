@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.chani.mylibrarykt.data.remote.model.Book
-import com.chani.mylibrarykt.data.remote.repository.BookstoreRepository
+import com.chani.mylibrarykt.data.repository.remote.model.Book
+import com.chani.mylibrarykt.data.repository.BookstoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

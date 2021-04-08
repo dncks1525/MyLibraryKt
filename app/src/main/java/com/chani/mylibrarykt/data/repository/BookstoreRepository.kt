@@ -1,13 +1,12 @@
-package com.chani.mylibrarykt.data.remote.repository
+package com.chani.mylibrarykt.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.chani.mylibrarykt.data.remote.BookstoreApi
-import com.chani.mylibrarykt.data.remote.model.Book
-import com.chani.mylibrarykt.data.remote.model.BookDetail
-import com.chani.mylibrarykt.data.remote.repository.pagingsource.NewBooksPagingSource
-import com.chani.mylibrarykt.data.remote.repository.pagingsource.SearchPagingSource
+import com.chani.mylibrarykt.data.repository.remote.BookstoreApi
+import com.chani.mylibrarykt.data.repository.remote.model.Book
+import com.chani.mylibrarykt.data.repository.remote.source.NewBooksPagingSource
+import com.chani.mylibrarykt.data.repository.remote.source.SearchPagingSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

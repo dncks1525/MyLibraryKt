@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data.remote.model
+package com.chani.mylibrarykt.data.repository.remote.model
 
 data class Bookstore(
     val error: Int,

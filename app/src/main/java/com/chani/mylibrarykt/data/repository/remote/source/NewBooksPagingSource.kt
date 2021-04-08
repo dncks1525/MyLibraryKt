@@ -1,9 +1,9 @@
-package com.chani.mylibrarykt.data.remote.repository.pagingsource
+package com.chani.mylibrarykt.data.repository.remote.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.chani.mylibrarykt.data.remote.model.Book
-import com.chani.mylibrarykt.data.remote.BookstoreApi
+import com.chani.mylibrarykt.data.repository.remote.model.Book
+import com.chani.mylibrarykt.data.repository.remote.BookstoreApi
 import java.lang.Exception
 
 class NewBooksPagingSource(

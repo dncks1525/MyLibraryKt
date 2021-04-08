@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.data.enum.BookType
-import com.chani.mylibrarykt.data.remote.model.Book
+import com.chani.mylibrarykt.data.repository.remote.model.Book
 import com.chani.mylibrarykt.databinding.ItemBookBinding
 import com.chani.mylibrarykt.databinding.ItemBookListBinding
 import com.chani.mylibrarykt.ui.BookDetailActivity
