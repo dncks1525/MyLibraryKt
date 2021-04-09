@@ -1,12 +1,13 @@
 package com.chani.mylibrarykt.data.repository.local.dao
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.chani.mylibrarykt.data.repository.local.entity.History
 
 @Dao
 interface HistoryDao {
     @Query("SELECT * FROM History ORDER BY timestamp DESC")
-    fun getHistories(): List<History>
+    fun getHistories(): PagingSource<Int, History>
 
     @Query("SELECT * FROM History ORDER BY timestamp DESC LIMIT 1")
     fun getLastHistory(): History?

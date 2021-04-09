@@ -9,10 +9,12 @@ import com.chani.mylibrarykt.data.repository.HistoryRepository
 import com.chani.mylibrarykt.data.repository.local.dao.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityRecentHistoryBinding
 import com.chani.mylibrarykt.databinding.ContentSubjectBinding
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.RecentHistoryViewModel
 import com.chani.mylibrarykt.viewmodel.factory.RecentHistoryViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,11 +22,7 @@ import javax.inject.Inject
 class RecentHistoryActivity : AppCompatActivity() {
     private val binding: ActivityRecentHistoryBinding by lazy { ActivityRecentHistoryBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var historyDao: HistoryDao
-    private lateinit var historyRepository: HistoryRepository
-    private val recentHistoryViewModel: RecentHistoryViewModel by viewModels {
-        RecentHistoryViewModelFactory(historyRepository)
-    }
+    private val recentHistoryViewModel: RecentHistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +31,15 @@ class RecentHistoryActivity : AppCompatActivity() {
         val subjectContent = ContentSubjectBinding.bind(binding.root)
         subjectContent.backImgbtn.setOnClickListener {
             finish()
-//            supportFinishAfterTransition()
         }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val histories = historyDao.getHistories()
-            historyRepository = HistoryRepository(histories)
+        lifecycleScope.launch {
+            val recentHistoryAdapter = RecentHistoryAdapter()
+            binding.recentHistoryRecycler.adapter = recentHistoryAdapter
+            binding.recentHistoryRecycler.setHasFixedSize(true)
 
-            lifecycleScope.launch {
-                val recentHistoryAdapter = RecentHistoryAdapter(histories, recentHistoryViewModel)
-                binding.recentHistoryRecycler.apply {
-                    setHasFixedSize(true)
-                    adapter = recentHistoryAdapter
-                }
+            recentHistoryViewModel.getHistories().collect {
+                recentHistoryAdapter.submitData(it)
             }
         }
     }

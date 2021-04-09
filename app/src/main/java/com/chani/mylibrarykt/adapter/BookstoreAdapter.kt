@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.databinding.ItemBookstoreBinding
 import com.chani.mylibrarykt.ui.BookCollectionActivity
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,10 +44,18 @@ class BookstoreAdapter(
 
             CoroutineScope(Dispatchers.IO).launch {
                 if (title == "New Releases") {
+                    bookAdapter.loadStateFlow.collectLatest {
+                        AppLog.d("bookAdapter new ${bookAdapter.itemCount}")
+                    }
+
                     bookstoreViewModel.getNewBooks().collectLatest {
                         bookAdapter.submitData(it)
                     }
                 } else {
+                    bookAdapter.loadStateFlow.collectLatest {
+                        AppLog.d("bookAdapter search ${bookAdapter.itemCount}")
+                    }
+
                     bookstoreViewModel.search(title).collectLatest {
                         bookAdapter.submitData(it)
                     }

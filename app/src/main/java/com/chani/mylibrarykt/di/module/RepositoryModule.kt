@@ -1,6 +1,8 @@
 package com.chani.mylibrarykt.di.module
 
 import com.chani.mylibrarykt.data.repository.BookstoreRepository
+import com.chani.mylibrarykt.data.repository.HistoryRepository
+import com.chani.mylibrarykt.data.repository.local.dao.HistoryDao
 import com.chani.mylibrarykt.data.repository.remote.BookstoreApi
 import dagger.Module
 import dagger.Provides
@@ -14,4 +16,8 @@ object RepositoryModule {
     @Provides
     @ViewModelScoped
     fun getBookstoreRepository(bookstoreApi: BookstoreApi) = BookstoreRepository(bookstoreApi)
+
+    @Provides
+    @ViewModelScoped
+    fun getHistoryRepository(historyDao: HistoryDao) = HistoryRepository(historyDao)
 }
