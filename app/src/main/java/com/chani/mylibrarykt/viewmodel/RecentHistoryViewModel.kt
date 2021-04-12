@@ -14,7 +14,7 @@ import javax.inject.Inject
 class RecentHistoryViewModel @Inject constructor(
     private val repository: HistoryRepository
 ) : ViewModel() {
-    fun getHistories(): Flow<PagingData<History>> {
+    fun getHistories(): Flow<PagingData<List<History>>> {
         return repository.getHistories().cachedIn(viewModelScope)
     }
 }

@@ -7,9 +7,10 @@ import com.chani.mylibrarykt.data.repository.remote.model.BookDetail
 
 @Entity
 data class History(
-    val book: Book,
-    val coverImgPath: String,
+    val date: String,
     val timestamp: Long,
+    val coverImgPath: String,
+    val book: Book
 ) {
     @PrimaryKey
     var isbn13: String = book.isbn13

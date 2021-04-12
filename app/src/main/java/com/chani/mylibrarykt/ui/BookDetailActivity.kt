@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -103,8 +104,8 @@ class BookDetailActivity : AppCompatActivity() {
             }
         }
 
-        val timestamp = Calendar.getInstance().timeInMillis
-
-        historyDao.insert(History(bookDetail.toBook(), imgFile.path, timestamp))
+        val c = Calendar.getInstance()
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        historyDao.insert(History(date.format(c.time), c.timeInMillis, imgFile.path, bookDetail.toBook()))
     }
 }

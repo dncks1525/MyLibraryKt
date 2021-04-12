@@ -6,8 +6,8 @@ import com.chani.mylibrarykt.data.repository.local.entity.History
 
 @Dao
 interface HistoryDao {
-    @Query("SELECT * FROM History ORDER BY timestamp DESC")
-    fun getHistories(): PagingSource<Int, History>
+//    @Query("SELECT * FROM History GROUP BY date ORDER BY timestamp DESC")
+//    fun getHistories(): PagingSource<Int, List<History>>
 
     @Query("SELECT * FROM History ORDER BY timestamp DESC LIMIT 1")
     fun getLastHistory(): History?

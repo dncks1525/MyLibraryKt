@@ -1,6 +1,5 @@
 package com.chani.mylibrarykt.adapter
 
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -9,17 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.data.repository.local.entity.History
 import com.chani.mylibrarykt.databinding.ItemHistoryBinding
 import com.chani.mylibrarykt.util.AppLog
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 class RecentHistoryAdapter :
-    PagingDataAdapter<History, RecentHistoryAdapter.RecentHistoryHolder>(RecentHistoryComparator()) {
-    private lateinit var recycler: RecyclerView
+    PagingDataAdapter<List<History>, RecentHistoryAdapter.RecentHistoryHolder>(RecentHistoryComparator()) {
+    private lateinit var currRecycler: RecyclerView
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        recycler = recyclerView
+        currRecycler = recyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentHistoryHolder {
@@ -35,21 +31,18 @@ class RecentHistoryAdapter :
     inner class RecentHistoryHolder(
         private val binding: ItemHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(history: History) = with(binding) {
-            val format = SimpleDateFormat("MM-dd", Locale.getDefault())
-            val time = format.format(Date(history.timestamp))
-            AppLog.d("time = $time")
-            AppLog.d("history = $history")
+        fun bind(histories: List<History>) = with(binding) {
+            AppLog.d("$histories")
         }
     }
 
-    class RecentHistoryComparator : DiffUtil.ItemCallback<History>() {
-        override fun areItemsTheSame(oldItem: History, newItem: History): Boolean {
-            return oldItem.isbn13 == newItem.isbn13
+    class RecentHistoryComparator : DiffUtil.ItemCallback<List<History>>() {
+        override fun areItemsTheSame(oldItem: List<History>, newItem: List<History>): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: History, newItem: History): Boolean {
-            return oldItem.book == newItem.book
+        override fun areContentsTheSame(oldItem: List<History>, newItem: List<History>): Boolean {
+            return oldItem == newItem
         }
     }
 }

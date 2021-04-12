@@ -9,8 +9,8 @@ object Versions {
     const val APPCOMPAT = "1.2.0"
     const val CORE_KTX = "1.3.2"
     const val COLLECTION_KTX = "1.1.0"
-    const val ACTIVITY_KTX = "1.2.0"
-    const val FRAGMENT_KTX = "1.3.0"
+    const val ACTIVITY_KTX = "1.2.2"
+    const val FRAGMENT_KTX = "1.3.2"
     const val MATERIAL = "1.2.1"
     const val CONSTRAINTLAYOUT = "2.0.4"
 
@@ -23,13 +23,13 @@ object Versions {
     const val TRUTH = "1.1.2"
 
     const val COROUTINES = "1.4.1"
-    const val LIFECYCLE = "2.3.0"
+    const val LIFECYCLE = "2.3.1"
     const val NAVIGATION = "2.3.3"
     const val WORK = "2.5.0"
-    const val ROOM = "2.3.0-beta03"
+    const val ROOM = "2.3.0-rc01"
     const val PAGING = "3.0.0-beta03"
     const val DAGGER = "2.33"
     const val GLIDE = "4.12.0"
     const val RETROFIT = "2.9.0"
-    const val HILT = "2.33-beta"
+    const val HILT = "2.34-beta"
 }
