@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data
+package com.chani.mylibrarykt
 
 import com.chani.mylibrarykt.data.local.History
 import com.chani.mylibrarykt.data.remote.model.Book

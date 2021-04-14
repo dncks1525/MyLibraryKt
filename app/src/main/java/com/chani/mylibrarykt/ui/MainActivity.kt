@@ -2,14 +2,18 @@ package com.chani.mylibrarykt.ui
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookstoreAdapter
+import com.chani.mylibrarykt.data.local.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import com.google.android.material.chip.Chip
@@ -19,12 +23,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @Inject lateinit var binding: ActivityMainBinding
-
+    @Inject lateinit var historyDao: HistoryDao
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +44,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (binding.logoImg.isGone) {
-            updateRecentCoverImg()
+            updateCoverImgByHistory()
         }
     }
 
     private fun initQuickSearch() = with(binding) {
-        val onClick =  View.OnClickListener {
+        val onClick = View.OnClickListener {
             Intent(this@MainActivity, BookSearchActivity::class.java).apply {
                 val options = ActivityOptions.makeSceneTransitionAnimation(
                     this@MainActivity, quickSearch,
@@ -70,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             delay(2000)
             logoGroup.visibility = View.GONE
             mainGroup.visibility = View.VISIBLE
-            updateRecentCoverImg()
+            updateCoverImgByHistory()
         }
 
         val subjectCategories = mutableListOf<String>().apply {
@@ -100,36 +105,35 @@ class MainActivity : AppCompatActivity() {
         bookstoreRecycler.adapter = BookstoreAdapter(subjectCategories, bookstoreViewModel)
     }
 
-    private fun updateRecentCoverImg() = lifecycleScope.launch(Dispatchers.IO) {
-//        historyDao.getLastHistory()?.let { user ->
-//            if (File(user.coverImgPath).exists()) {
-//                val bmp = BitmapFactory.decodeFile(user.coverImgPath)
-//                lifecycleScope.launch {
-//                    binding.recentHistoryImgbtn.apply {
-//                        if (drawable is BitmapDrawable) {
-//                            (drawable as BitmapDrawable).bitmap.recycle()
-//                        }
-//
-//                        setImageDrawable(BitmapDrawable(resources, bmp))
-//
-//                        if (isGone) visibility = View.VISIBLE
-//                        if (!hasOnClickListeners()) {
-//                            setOnClickListener {
-//                                AppLog.d("recentHistoryImgbtn clicked")
-//                                Intent(this@MainActivity, RecentHistoryActivity::class.java).apply {
-//                                    startActivity(this)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            } else {
-//                lifecycleScope.launch {
-//                    if (binding.recentHistoryImgbtn.isVisible) {
-//                        binding.recentHistoryImgbtn.visibility = View.GONE
-//                    }
-//                }
-//            }
-//        }
+    private fun updateCoverImgByHistory() = lifecycleScope.launch(Dispatchers.IO) {
+        historyDao.getLastHistory()?.let { history ->
+            if (File(history.imgPath).exists()) {
+                val bmp = BitmapFactory.decodeFile(history.imgPath)
+                lifecycleScope.launch {
+                    binding.historyImgbtn.apply {
+                        if (drawable is BitmapDrawable) {
+                            (drawable as BitmapDrawable).bitmap.recycle()
+                        }
+
+                        setImageDrawable(BitmapDrawable(resources, bmp))
+
+                        if (isGone) visibility = View.VISIBLE
+                        if (!hasOnClickListeners()) {
+                            setOnClickListener {
+                                Intent(this@MainActivity, RecentBooksActivity::class.java).apply {
+                                    startActivity(this)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                lifecycleScope.launch {
+                    if (binding.historyImgbtn.isVisible) {
+                        binding.historyImgbtn.visibility = View.GONE
+                    }
+                }
+            }
+        }
     }
 }

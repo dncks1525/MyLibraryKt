@@ -1,16 +1,31 @@
 package com.chani.mylibrarykt.data.local
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 abstract class HistoryDao {
-    @Insert
+    @Transaction
+    open fun getRecentBooks(): List<List<History>> {
+        return mutableListOf<List<History>>().apply {
+            getDates().forEach {
+                add(getHistoriesBy(it))
+            }
+        }
+    }
+
+    @Query("SELECT * FROM History WHERE date(timestamp/1000, 'unixepoch') = :date")
+    abstract fun getHistoriesBy(date: String): List<History>
+
+    @Query("SELECT DISTINCT date(timestamp/1000, 'unixepoch') as date FROM History ORDER BY date DESC")
+    abstract fun getDates(): List<String>
+
+    @Query("SELECT * FROM History ORDER BY timestamp DESC LIMIT 1")
+    abstract fun getLastHistory(): History?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(history: History)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(histories: List<History>)
 
     @Delete

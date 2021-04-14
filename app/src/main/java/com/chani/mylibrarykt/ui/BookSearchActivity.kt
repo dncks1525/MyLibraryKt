@@ -26,9 +26,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BookSearchActivity : AppCompatActivity() {
     @Inject lateinit var binding: ActivityBookSearchBinding
-
-    private val bookstoreViewModel: BookstoreViewModel by viewModels()
     @Inject lateinit var searchRecentSuggestions: SearchRecentSuggestions
+    private val bookstoreViewModel: BookstoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

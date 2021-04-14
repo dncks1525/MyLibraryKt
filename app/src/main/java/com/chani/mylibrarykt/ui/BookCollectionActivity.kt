@@ -23,13 +23,13 @@ class BookCollectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val subjectContent = ContentSubjectBinding.bind(binding.root)
+        val subjectBinding = ContentSubjectBinding.bind(binding.root)
 
         with(binding) {
-            subjectContent.backImgbtn.setOnClickListener { finish() }
+            subjectBinding.backImgbtn.setOnClickListener { finish() }
 
             intent.getStringExtra(AppConst.EXTRA_TITLE)?.let { title ->
-                subjectContent.titleTxt.text = title
+                subjectBinding.titleTxt.text = title
 
                 val adapter = BookAdapter()
                 bookRecycler.adapter = adapter

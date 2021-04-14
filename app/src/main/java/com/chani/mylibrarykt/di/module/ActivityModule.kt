@@ -2,15 +2,9 @@ package com.chani.mylibrarykt.di.module
 
 import android.content.Context
 import android.provider.SearchRecentSuggestions
-import com.chani.mylibrarykt.databinding.ActivityBookCollectionBinding
-import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
-import com.chani.mylibrarykt.databinding.ActivityBookSearchBinding
-import com.chani.mylibrarykt.databinding.ActivityMainBinding
+import com.chani.mylibrarykt.databinding.*
 import com.chani.mylibrarykt.provider.QuickSearchProvider
-import com.chani.mylibrarykt.ui.BookCollectionActivity
-import com.chani.mylibrarykt.ui.BookDetailActivity
-import com.chani.mylibrarykt.ui.BookSearchActivity
-import com.chani.mylibrarykt.ui.MainActivity
+import com.chani.mylibrarykt.ui.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,6 +33,11 @@ object ActivityModule {
     @Provides
     fun provideBookCollectionActivity(@ActivityContext ctx: Context): ActivityBookCollectionBinding {
         return ActivityBookCollectionBinding.inflate((ctx as BookCollectionActivity).layoutInflater)
+    }
+
+    @Provides
+    fun provideHistoryActivity(@ActivityContext ctx: Context): ActivityRecentBooksBinding {
+        return ActivityRecentBooksBinding.inflate((ctx as RecentBooksActivity).layoutInflater)
     }
 
     @Provides

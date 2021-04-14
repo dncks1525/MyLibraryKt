@@ -9,20 +9,24 @@ import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
+import com.chani.mylibrarykt.convertTo
+import com.chani.mylibrarykt.data.local.HistoryDao
 import com.chani.mylibrarykt.data.remote.BookstoreApi
 import com.chani.mylibrarykt.data.remote.model.BookDetail
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookDetailActivity : AppCompatActivity() {
     @Inject lateinit var binding: ActivityBookDetailBinding
-
     @Inject lateinit var bookstoreApi: BookstoreApi
+    @Inject lateinit var historyDao: HistoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,21 +88,19 @@ class BookDetailActivity : AppCompatActivity() {
     }
 
     private fun saveToRecentHistoryDatabase(arr: ByteArray, bookDetail: BookDetail) {
-//        val imgFile = File(filesDir, "${bookDetail.isbn13}.png")
-//        if (!imgFile.exists()) {
-//            try {
-//                FileOutputStream(imgFile).apply {
-//                    write(arr)
-//                    flush()
-//                    close()
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//
-//        val c = Calendar.getInstance()
-//        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-//        historyDao.insert(History(date.format(c.time), c.timeInMillis, imgFile.path, bookDetail.toBook()))
+        val imgFile = File(filesDir, "${bookDetail.isbn13}.png")
+        if (!imgFile.exists()) {
+            try {
+                FileOutputStream(imgFile).apply {
+                    write(arr)
+                    flush()
+                    close()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        historyDao.insert(bookDetail.toBook().convertTo(Calendar.getInstance().timeInMillis, imgFile.path))
     }
 }
