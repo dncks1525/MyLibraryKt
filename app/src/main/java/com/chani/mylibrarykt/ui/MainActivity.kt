@@ -2,45 +2,35 @@ package com.chani.mylibrarykt.ui
 
 import android.app.ActivityOptions
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookstoreAdapter
-import com.chani.mylibrarykt.data.repository.local.dao.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
-import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import com.google.android.material.chip.Chip
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject lateinit var binding: ActivityMainBinding
 
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
-    @Inject lateinit var historyDao: HistoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        firebaseAnalytics = Firebase.analytics
+        Firebase.analytics
 
         initQuickSearch()
         initBookstore()
@@ -111,35 +101,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateRecentCoverImg() = lifecycleScope.launch(Dispatchers.IO) {
-        historyDao.getLastHistory()?.let { user ->
-            if (File(user.coverImgPath).exists()) {
-                val bmp = BitmapFactory.decodeFile(user.coverImgPath)
-                lifecycleScope.launch {
-                    binding.recentHistoryImgbtn.apply {
-                        if (drawable is BitmapDrawable) {
-                            (drawable as BitmapDrawable).bitmap.recycle()
-                        }
-
-                        setImageDrawable(BitmapDrawable(resources, bmp))
-
-                        if (isGone) visibility = View.VISIBLE
-                        if (!hasOnClickListeners()) {
-                            setOnClickListener {
-                                AppLog.d("recentHistoryImgbtn clicked")
-                                Intent(this@MainActivity, RecentHistoryActivity::class.java).apply {
-                                    startActivity(this)
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                lifecycleScope.launch {
-                    if (binding.recentHistoryImgbtn.isVisible) {
-                        binding.recentHistoryImgbtn.visibility = View.GONE
-                    }
-                }
-            }
-        }
+//        historyDao.getLastHistory()?.let { user ->
+//            if (File(user.coverImgPath).exists()) {
+//                val bmp = BitmapFactory.decodeFile(user.coverImgPath)
+//                lifecycleScope.launch {
+//                    binding.recentHistoryImgbtn.apply {
+//                        if (drawable is BitmapDrawable) {
+//                            (drawable as BitmapDrawable).bitmap.recycle()
+//                        }
+//
+//                        setImageDrawable(BitmapDrawable(resources, bmp))
+//
+//                        if (isGone) visibility = View.VISIBLE
+//                        if (!hasOnClickListeners()) {
+//                            setOnClickListener {
+//                                AppLog.d("recentHistoryImgbtn clicked")
+//                                Intent(this@MainActivity, RecentHistoryActivity::class.java).apply {
+//                                    startActivity(this)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                lifecycleScope.launch {
+//                    if (binding.recentHistoryImgbtn.isVisible) {
+//                        binding.recentHistoryImgbtn.visibility = View.GONE
+//                    }
+//                }
+//            }
+//        }
     }
 }

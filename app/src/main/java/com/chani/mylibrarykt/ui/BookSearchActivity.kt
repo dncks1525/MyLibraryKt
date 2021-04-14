@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookSearchActivity : AppCompatActivity() {
-    private val binding: ActivityBookSearchBinding by lazy { ActivityBookSearchBinding.inflate(layoutInflater) }
+    @Inject lateinit var binding: ActivityBookSearchBinding
 
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
     @Inject lateinit var searchRecentSuggestions: SearchRecentSuggestions

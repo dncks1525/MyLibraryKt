@@ -12,10 +12,11 @@ import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookCollectionActivity : AppCompatActivity() {
-    private val binding: ActivityBookCollectionBinding by lazy { ActivityBookCollectionBinding.inflate(layoutInflater) }
+    @Inject lateinit var binding: ActivityBookCollectionBinding
     private val bookstoreViewModel: BookstoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

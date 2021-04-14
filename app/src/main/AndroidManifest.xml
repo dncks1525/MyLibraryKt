@@ -45,9 +45,6 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity
-            android:name=".ui.RecentHistoryActivity"
-            android:launchMode="singleTop" />
 
         <provider
             android:name=".provider.QuickSearchProvider"

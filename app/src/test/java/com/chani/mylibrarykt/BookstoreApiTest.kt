@@ -1,6 +1,6 @@
 package com.chani.mylibrarykt
 
-import com.chani.mylibrarykt.data.repository.remote.BookstoreApi
+import com.chani.mylibrarykt.data.remote.BookstoreApi
 import com.google.common.truth.Truth
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -14,7 +14,7 @@ class BookstoreApiTest {
     @Before
     fun setup() {
         api = Retrofit.Builder()
-            .baseUrl(AppConst.IT_BOOK_STORE_BASE_URL)
+            .baseUrl("https://api.itbook.store/1.0/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(BookstoreApi::class.java)
