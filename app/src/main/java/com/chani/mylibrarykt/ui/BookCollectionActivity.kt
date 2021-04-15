@@ -23,9 +23,8 @@ class BookCollectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val subjectBinding = ContentSubjectBinding.bind(binding.root)
-
         with(binding) {
+            val subjectBinding = ContentSubjectBinding.bind(root)
             subjectBinding.backImgbtn.setOnClickListener { finish() }
 
             intent.getStringExtra(AppConst.EXTRA_TITLE)?.let { title ->
@@ -33,6 +32,8 @@ class BookCollectionActivity : AppCompatActivity() {
 
                 val adapter = BookAdapter()
                 bookRecycler.adapter = adapter
+                bookRecycler.setHasFixedSize(true)
+
                 lifecycleScope.launch {
                     bookstoreViewModel.search(title).collectLatest {
                         adapter.submitData(it)

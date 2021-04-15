@@ -44,18 +44,10 @@ class BookstoreAdapter(
 
             CoroutineScope(Dispatchers.IO).launch {
                 if (title == "New Releases") {
-                    bookAdapter.loadStateFlow.collectLatest {
-                        AppLog.d("bookAdapter new ${bookAdapter.itemCount}")
-                    }
-
                     bookstoreViewModel.getNewBooks().collectLatest {
                         bookAdapter.submitData(it)
                     }
                 } else {
-                    bookAdapter.loadStateFlow.collectLatest {
-                        AppLog.d("bookAdapter search ${bookAdapter.itemCount}")
-                    }
-
                     bookstoreViewModel.search(title).collectLatest {
                         bookAdapter.submitData(it)
                     }

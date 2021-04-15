@@ -8,8 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.chani.mylibrarykt.data.local.History
 import com.chani.mylibrarykt.data.local.HistoryDao
-import com.chani.mylibrarykt.data.local.HistoryPagingSource
-import com.chani.mylibrarykt.data.local.RecentBooksPagingSource
+import com.chani.mylibrarykt.data.local.source.HistoryPagingSource
+import com.chani.mylibrarykt.data.local.source.RecentBooksPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class RecentBooksViewModel @Inject constructor(
             .cachedIn(viewModelScope)
     }
 
-    fun getHistories(histories: List<History>): Flow<PagingData<History>> {
+    fun transformHistories(histories: List<History>): Flow<PagingData<History>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { HistoryPagingSource(histories) }

@@ -7,6 +7,7 @@
 
     <string name="common_retry">retry</string>
     <string name="common_no_contents_found">No contents found</string>
+    <string name="common_recent_books">Recent Books</string>
 
     <string name="search_hint">Search Book</string>
 

@@ -6,34 +6,49 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.data.local.History
-import com.chani.mylibrarykt.databinding.ItemBookListBinding
+import com.chani.mylibrarykt.databinding.ItemRecentBooksBinding
+import com.chani.mylibrarykt.util.AppLog
+import com.chani.mylibrarykt.viewmodel.RecentBooksViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class RecentBooksAdapter : PagingDataAdapter<List<History>, RecentBooksAdapter.HistoryHolder>(HistoryComparator()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
-        return HistoryHolder(
-            ItemBookListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+class RecentBooksAdapter(
+    private val recentBooksViewModel: RecentBooksViewModel
+) : PagingDataAdapter<List<History>, RecentBooksAdapter.RecentBooksHolder>(RecentBooksComparator()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentBooksHolder {
+        return RecentBooksHolder(
+            ItemRecentBooksBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecentBooksHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
-    inner class HistoryHolder(
-        private val binding: ItemBookListBinding
+    inner class RecentBooksHolder(
+        private val binding: ItemRecentBooksBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(histories: List<History>) {
+        fun bind(histories: List<History>) = with(binding) {
 
+            val adapter = HistoryAdapter()
+            historyRecycler.adapter = adapter
+            CoroutineScope(Dispatchers.IO).launch {
+                recentBooksViewModel.transformHistories(histories).collectLatest {
+                    adapter.submitData(it)
+                }
+            }
         }
     }
 
-    private class HistoryComparator : DiffUtil.ItemCallback<List<History>>() {
+    private class RecentBooksComparator : DiffUtil.ItemCallback<List<History>>() {
         override fun areContentsTheSame(oldItem: List<History>, newItem: List<History>): Boolean {
             return oldItem == newItem
         }
 
         override fun areItemsTheSame(oldItem: List<History>, newItem: List<History>): Boolean {
-            return oldItem == newItem
+            return oldItem.first().isbn13 == newItem.first().isbn13
         }
     }
 }

@@ -14,7 +14,8 @@ class SearchPagingSource(
         return try {
             val page = params.key ?: 1
             val bookstore = api.search(query, page)
-            AppLog.d("bookstore page ${bookstore.page} ${bookstore.total}")
+            AppLog.d("SearchSource page ${bookstore.page} ${bookstore.total}")
+
             LoadResult.Page(
                 data = bookstore.books,
                 prevKey = if (page > 1) page - 1 else null,

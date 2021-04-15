@@ -17,6 +17,7 @@ import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
@@ -77,7 +78,7 @@ class BookDetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    lifecycleScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.IO) {
                         if (imgByteArray != null) {
                             saveToRecentHistoryDatabase(imgByteArray, bookDetail)
                         }

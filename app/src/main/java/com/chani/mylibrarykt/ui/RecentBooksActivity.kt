@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.chani.mylibrarykt.R
+import com.chani.mylibrarykt.adapter.RecentBooksAdapter
 import com.chani.mylibrarykt.data.local.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityRecentBooksBinding
 import com.chani.mylibrarykt.databinding.ContentSubjectBinding
@@ -24,14 +26,22 @@ class RecentBooksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val subjectBinding = ContentSubjectBinding.bind(binding.root)
-        subjectBinding.backImgbtn.setOnClickListener {
-            finish()
-        }
+        with(binding) {
+            with(ContentSubjectBinding.bind(root)) {
+                titleTxt.text = getString(R.string.common_recent_books)
+                backImgbtn.setOnClickListener {
+                    finish()
+                }
+            }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            recentBooksViewModel.getRecentBooks().collectLatest {
+            val recentBooksAdapter = RecentBooksAdapter(recentBooksViewModel)
+            recentBooksRecycler.adapter = recentBooksAdapter
+            recentBooksRecycler.setHasFixedSize(true)
 
+            lifecycleScope.launch(Dispatchers.IO) {
+                recentBooksViewModel.getRecentBooks().collectLatest {
+                    recentBooksAdapter.submitData(it)
+                }
             }
         }
     }

@@ -1,7 +1,8 @@
-package com.chani.mylibrarykt.data.local
+package com.chani.mylibrarykt.data.local.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.chani.mylibrarykt.data.local.History
 
 class HistoryPagingSource(
     private val histories: List<History>

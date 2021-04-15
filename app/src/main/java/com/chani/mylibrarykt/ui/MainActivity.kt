@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         Firebase.analytics
 
         initQuickSearch()
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (binding.logoImg.isGone) {
-            updateCoverImgByHistory()
+            updateRecentBook()
         }
     }
 
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             delay(2000)
             logoGroup.visibility = View.GONE
             mainGroup.visibility = View.VISIBLE
-            updateCoverImgByHistory()
+            updateRecentBook()
         }
 
         val subjectCategories = mutableListOf<String>().apply {
@@ -105,33 +106,28 @@ class MainActivity : AppCompatActivity() {
         bookstoreRecycler.adapter = BookstoreAdapter(subjectCategories, bookstoreViewModel)
     }
 
-    private fun updateCoverImgByHistory() = lifecycleScope.launch(Dispatchers.IO) {
+    private fun updateRecentBook() = lifecycleScope.launch(Dispatchers.IO) {
         historyDao.getLastHistory()?.let { history ->
             if (File(history.imgPath).exists()) {
-                val bmp = BitmapFactory.decodeFile(history.imgPath)
-                lifecycleScope.launch {
-                    binding.historyImgbtn.apply {
-                        if (drawable is BitmapDrawable) {
-                            (drawable as BitmapDrawable).bitmap.recycle()
-                        }
+                binding.historyImgbtn.apply {
+                    if (drawable is BitmapDrawable) {
+                        (drawable as BitmapDrawable).bitmap.recycle()
+                    }
 
-                        setImageDrawable(BitmapDrawable(resources, bmp))
+                    setImageBitmap(BitmapFactory.decodeFile(history.imgPath))
 
-                        if (isGone) visibility = View.VISIBLE
-                        if (!hasOnClickListeners()) {
-                            setOnClickListener {
-                                Intent(this@MainActivity, RecentBooksActivity::class.java).apply {
-                                    startActivity(this)
-                                }
+                    if (isGone) visibility = View.VISIBLE
+                    if (!hasOnClickListeners()) {
+                        setOnClickListener {
+                            Intent(this@MainActivity, RecentBooksActivity::class.java).apply {
+                                startActivity(this)
                             }
                         }
                     }
                 }
             } else {
-                lifecycleScope.launch {
-                    if (binding.historyImgbtn.isVisible) {
-                        binding.historyImgbtn.visibility = View.GONE
-                    }
+                if (binding.historyImgbtn.isVisible) {
+                    binding.historyImgbtn.visibility = View.GONE
                 }
             }
         }
