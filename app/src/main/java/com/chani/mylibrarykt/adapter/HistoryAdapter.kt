@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.data.local.History
 import com.chani.mylibrarykt.databinding.ItemHistoryBinding
+import com.chani.mylibrarykt.util.AppLog
 import java.io.File
 
 class HistoryAdapter : PagingDataAdapter<History, HistoryAdapter.HistoryHolder>(HistoryComparator()) {
@@ -25,6 +26,7 @@ class HistoryAdapter : PagingDataAdapter<History, HistoryAdapter.HistoryHolder>(
         private val binding: ItemHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(history: History) = with(binding) {
+            AppLog.d("historyAdapter = ${history.title}")
             titleTxt.text = history.title
             subtitleTxt.text = history.subtitle
             priceTxt.text = history.price

@@ -16,18 +16,22 @@
 
     <TextView
         android:id="@+id/titleTxt"
-        style="@style/AppText"
+        style="@style/BookListText.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/coverImg"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/sample" />
 
     <TextView
         android:id="@+id/subtitleTxt"
-        style="@style/AppText"
+        style="@style/BookListText.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@id/titleTxt"
         app:layout_constraintStart_toStartOf="@id/titleTxt"
         app:layout_constraintTop_toBottomOf="@id/titleTxt"
         tools:text="@string/sample" />
@@ -37,8 +41,10 @@
         style="@style/AppText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/titleTxt"
         app:layout_constraintStart_toStartOf="@id/titleTxt"
-        app:layout_constraintTop_toBottomOf="@id/subtitleTxt"
         tools:text="@string/sample" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

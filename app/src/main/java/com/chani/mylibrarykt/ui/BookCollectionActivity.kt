@@ -35,8 +35,14 @@ class BookCollectionActivity : AppCompatActivity() {
                 bookRecycler.setHasFixedSize(true)
 
                 lifecycleScope.launch {
-                    bookstoreViewModel.search(title).collectLatest {
-                        adapter.submitData(it)
+                    if (title == "New Releases") {
+                        bookstoreViewModel.getNewBooks().collectLatest {
+                            adapter.submitData(it)
+                        }
+                    } else {
+                        bookstoreViewModel.search(title).collectLatest {
+                            adapter.submitData(it)
+                        }
                     }
                 }
             }

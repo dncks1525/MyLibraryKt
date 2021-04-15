@@ -20,7 +20,7 @@ class BookstoreViewModel @Inject constructor(
 ) : ViewModel() {
     fun getNewBooks(): Flow<PagingData<Book>> {
         return Pager(
-            config = PagingConfig(pageSize = 10),
+            config = PagingConfig(pageSize = 20),
             pagingSourceFactory = { NewBooksPagingSource(api) }
         ).flow
             .cachedIn(viewModelScope)

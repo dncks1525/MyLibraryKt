@@ -19,9 +19,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/dateIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dateIcon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dateIcon"
         tools:text="@string/sample" />
 
     <View

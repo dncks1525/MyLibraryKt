@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.adapter.BookstoreAdapter
 import com.chani.mylibrarykt.data.local.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityMainBinding
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.ktx.analytics
@@ -23,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
@@ -108,26 +110,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateRecentBook() = lifecycleScope.launch(Dispatchers.IO) {
         historyDao.getLastHistory()?.let { history ->
-            if (File(history.imgPath).exists()) {
-                binding.historyImgbtn.apply {
-                    if (drawable is BitmapDrawable) {
-                        (drawable as BitmapDrawable).bitmap.recycle()
-                    }
+            withContext(Dispatchers.Main) {
+                if (File(history.imgPath).exists()) {
+                    binding.historyImgbtn.apply {
+                        if (drawable != null && drawable is BitmapDrawable) {
+                            (drawable as BitmapDrawable).bitmap.recycle()
+                        }
 
-                    setImageBitmap(BitmapFactory.decodeFile(history.imgPath))
+                        setImageBitmap(BitmapFactory.decodeFile(history.imgPath))
 
-                    if (isGone) visibility = View.VISIBLE
-                    if (!hasOnClickListeners()) {
-                        setOnClickListener {
-                            Intent(this@MainActivity, RecentBooksActivity::class.java).apply {
-                                startActivity(this)
+                        if (isGone) visibility = View.VISIBLE
+                        if (!hasOnClickListeners()) {
+                            setOnClickListener {
+                                Intent(this@MainActivity, RecentBooksActivity::class.java).apply {
+                                    startActivity(this)
+                                }
                             }
                         }
                     }
-                }
-            } else {
-                if (binding.historyImgbtn.isVisible) {
-                    binding.historyImgbtn.visibility = View.GONE
+                } else {
+                    if (binding.historyImgbtn.isVisible) {
+                        binding.historyImgbtn.visibility = View.GONE
+                    }
                 }
             }
         }

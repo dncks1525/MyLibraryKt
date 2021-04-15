@@ -12,15 +12,7 @@ class NewBooksPagingSource(
 ) : PagingSource<Int, Book>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
         return try {
-            val page = params.key ?: 1
-            val books = api.getNewBooks().books
-            AppLog.d("source books = ${books.size}")
-
-            LoadResult.Page(
-                data = books,
-                prevKey = if (page > 1) page - 1 else null,
-                nextKey = if (page + 1 < books.size) page + 1 else null
-            )
+            LoadResult.Page(api.getNewBooks().books, null, null)
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

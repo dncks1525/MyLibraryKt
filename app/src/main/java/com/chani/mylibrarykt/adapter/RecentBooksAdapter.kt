@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecentBooksAdapter(
     private val recentBooksViewModel: RecentBooksViewModel
@@ -31,6 +33,11 @@ class RecentBooksAdapter(
         private val binding: ItemRecentBooksBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(histories: List<History>) = with(binding) {
+            AppLog.d("RecentBookHolder histories = ${histories.count()}, ${histories.first().title}")
+
+            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = formatter.format(histories.first().timestamp)
+            dateTxt.text = date
 
             val adapter = HistoryAdapter()
             historyRecycler.adapter = adapter
