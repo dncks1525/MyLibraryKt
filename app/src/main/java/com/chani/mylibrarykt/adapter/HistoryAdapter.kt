@@ -26,7 +26,6 @@ class HistoryAdapter : PagingDataAdapter<History, HistoryAdapter.HistoryHolder>(
         private val binding: ItemHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(history: History) = with(binding) {
-            AppLog.d("historyAdapter = ${history.title}")
             titleTxt.text = history.title
             subtitleTxt.text = history.subtitle
             priceTxt.text = history.price

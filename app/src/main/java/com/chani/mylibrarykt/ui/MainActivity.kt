@@ -120,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                         setImageBitmap(BitmapFactory.decodeFile(history.imgPath))
 
                         if (isGone) visibility = View.VISIBLE
+
                         if (!hasOnClickListeners()) {
                             setOnClickListener {
                                 Intent(this@MainActivity, RecentBooksActivity::class.java).apply {

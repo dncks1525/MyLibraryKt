@@ -58,4 +58,20 @@
         app:layout_constraintTop_toBottomOf="@id/titleAreaCst"
         tools:listitem="@layout/item_book" />
 
+    <ProgressBar
+        android:id="@+id/loadingProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/contentsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="titleAreaCst,bookRecycler" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

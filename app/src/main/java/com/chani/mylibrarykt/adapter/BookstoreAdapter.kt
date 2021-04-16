@@ -2,7 +2,11 @@ package com.chani.mylibrarykt.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.databinding.ItemBookstoreBinding
@@ -13,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 class BookstoreAdapter(
     private val subjectCategories: List<String>,
@@ -38,7 +43,29 @@ class BookstoreAdapter(
         fun bind(title: String) = with(binding) {
             titleTxt.text = title
 
-            val bookAdapter = BookAdapter()
+            val bookAdapter = BookAdapter().apply {
+                CoroutineScope(Dispatchers.Main).launch {
+                    var isFirstRun = true
+                    loadStateFlow.collectLatest { state ->
+                        // todo: working but the state should be checked.
+                        AppLog.d("bookstore state = $state")
+
+                        if (isFirstRun) {
+                            isFirstRun = false
+                            return@collectLatest
+                        }
+
+                        if (state.refresh == LoadState.Loading) {
+                            contentsGroup.visibility = View.GONE
+                            loadingProgress.visibility = View.VISIBLE
+                        } else {
+                            contentsGroup.visibility = View.VISIBLE
+                            loadingProgress.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
             bookRecycler.adapter = bookAdapter
             bookRecycler.setHasFixedSize(true)
 

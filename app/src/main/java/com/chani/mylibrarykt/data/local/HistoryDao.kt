@@ -13,7 +13,7 @@ abstract class HistoryDao {
         }
     }
 
-    @Query("SELECT * FROM History WHERE date(timestamp/1000, 'unixepoch') = :date")
+    @Query("SELECT * FROM History WHERE date(timestamp/1000, 'unixepoch') = :date ORDER BY timestamp DESC")
     abstract fun getHistoriesBy(date: String): List<History>
 
     @Query("SELECT DISTINCT date(timestamp/1000, 'unixepoch') as date FROM History ORDER BY date DESC")
