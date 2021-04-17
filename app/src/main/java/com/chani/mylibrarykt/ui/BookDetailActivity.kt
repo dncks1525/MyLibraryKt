@@ -44,6 +44,8 @@ class BookDetailActivity : AppCompatActivity() {
                 coverImg.setImageBitmap(BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size))
             }
 
+            val isNoHistory = intent.getBooleanExtra(AppConst.EXTRA_NO_HISTORY, false)
+
             intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
                 lifecycleScope.launch {
                     root.children.forEach { v ->
@@ -79,7 +81,7 @@ class BookDetailActivity : AppCompatActivity() {
                     }
 
                     withContext(Dispatchers.IO) {
-                        if (imgByteArray != null) {
+                        if (!isNoHistory && imgByteArray != null) {
                             saveToRecentHistoryDatabase(imgByteArray, bookDetail)
                         }
                     }

@@ -20,6 +20,7 @@ import com.chani.mylibrarykt.data.enum.BookType
 import com.chani.mylibrarykt.data.remote.model.Book
 import com.chani.mylibrarykt.databinding.ItemBookBinding
 import com.chani.mylibrarykt.databinding.ItemBookListBinding
+import com.chani.mylibrarykt.toByteArray
 import com.chani.mylibrarykt.ui.BookDetailActivity
 import java.io.ByteArrayOutputStream
 
@@ -80,9 +81,9 @@ class BookAdapter(
 
             root.setOnClickListener {
                 val ctx = root.context
-                with(Intent(ctx, BookDetailActivity::class.java)) {
+                Intent(ctx, BookDetailActivity::class.java).apply {
                     putExtra(AppConst.EXTRA_ISBN, book.isbn13)
-                    putExtra(AppConst.EXTRA_COVER, toByteArray(coverImg))
+                    putExtra(AppConst.EXTRA_COVER, coverImg.toByteArray())
                     val options = ActivityOptions.makeSceneTransitionAnimation(
                         (root.context as Activity),
                         coverImg,
@@ -91,13 +92,6 @@ class BookAdapter(
                     ctx.startActivity(this, options.toBundle())
                 }
             }
-        }
-
-        private fun toByteArray(img: ImageView): ByteArray {
-            val bmp = (img.drawable as BitmapDrawable).bitmap
-            val stream = ByteArrayOutputStream()
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            return stream.toByteArray()
         }
     }
 

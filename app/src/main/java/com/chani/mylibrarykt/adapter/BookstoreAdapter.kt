@@ -45,28 +45,19 @@ class BookstoreAdapter(
 
             val bookAdapter = BookAdapter().apply {
                 CoroutineScope(Dispatchers.Main).launch {
-                    var isFirstRun = true
                     loadStateFlow.collectLatest { state ->
-                        // todo: working but the state should be checked.
-                        AppLog.d("bookstore state = $state")
-
-                        if (isFirstRun) {
-                            isFirstRun = false
-                            return@collectLatest
-                        }
-
                         if (state.refresh == LoadState.Loading) {
-                            contentsGroup.visibility = View.GONE
                             loadingProgress.visibility = View.VISIBLE
                         } else {
-                            contentsGroup.visibility = View.VISIBLE
-                            loadingProgress.visibility = View.GONE
+                            if (loadingProgress.isVisible) {
+                                loadingProgress.visibility = View.GONE
+                            }
                         }
                     }
                 }
             }
 
-            bookRecycler.adapter = bookAdapter
+            bookRecycler.adapter = bookAdapter.withLoadStateFooter(BookFooterAdapter(bookAdapter::retry))
             bookRecycler.setHasFixedSize(true)
 
             CoroutineScope(Dispatchers.IO).launch {

@@ -1,9 +1,12 @@
 package com.chani.mylibrarykt.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.adapter.RecentBooksAdapter
 import com.chani.mylibrarykt.data.local.HistoryDao

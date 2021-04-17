@@ -1,7 +1,10 @@
 package com.chani.mylibrarykt.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +14,12 @@ import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.RecentBooksViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.suspendCoroutine
 
 class RecentBooksAdapter(
     private val recentBooksViewModel: RecentBooksViewModel
@@ -33,13 +38,23 @@ class RecentBooksAdapter(
         private val binding: ItemRecentBooksBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(histories: List<History>) = with(binding) {
-            AppLog.d("RecentBookHolder histories = ${histories.count()}, ${histories.first().title}")
-
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val date = formatter.format(histories.first().timestamp)
             dateTxt.text = date
 
-            val adapter = HistoryAdapter()
+            val adapter = HistoryAdapter().apply {
+                CoroutineScope(Dispatchers.Main).launch {
+                    loadStateFlow.collectLatest { state ->
+                        if (state.refresh == LoadState.Loading) {
+                            loadingProgress.visibility = View.VISIBLE
+                        } else {
+                            if (loadingProgress.isVisible) {
+                                loadingProgress.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
+            }
             historyRecycler.adapter = adapter
             CoroutineScope(Dispatchers.IO).launch {
                 recentBooksViewModel.transformHistories(histories).collectLatest {

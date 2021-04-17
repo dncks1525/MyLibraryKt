@@ -116,11 +116,9 @@ class MainActivity : AppCompatActivity() {
                         if (drawable != null && drawable is BitmapDrawable) {
                             (drawable as BitmapDrawable).bitmap.recycle()
                         }
-
                         setImageBitmap(BitmapFactory.decodeFile(history.imgPath))
 
                         if (isGone) visibility = View.VISIBLE
-
                         if (!hasOnClickListeners()) {
                             setOnClickListener {
                                 Intent(this@MainActivity, RecentBooksActivity::class.java).apply {

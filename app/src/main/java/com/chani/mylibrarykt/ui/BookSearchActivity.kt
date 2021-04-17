@@ -3,6 +3,7 @@ package com.chani.mylibrarykt.ui
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
 import android.view.View
@@ -17,6 +18,7 @@ import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.adapter.BookFooterAdapter
 import com.chani.mylibrarykt.data.enum.BookType
 import com.chani.mylibrarykt.databinding.ActivityBookSearchBinding
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -82,6 +84,22 @@ class BookSearchActivity : AppCompatActivity() {
                 findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon).setOnClickListener {
                     clearFocus()
                     supportFinishAfterTransition()
+                }
+            }
+
+            var isKeyboardShowing = false
+            root.viewTreeObserver.addOnGlobalLayoutListener {
+                Rect().apply {
+                    root.getWindowVisibleDisplayFrame(this)
+                    val diff = root.rootView.height - bottom
+                    isKeyboardShowing = if (diff > (root.rootView.height / 4)) {
+                        true
+                    } else {
+                        if (isKeyboardShowing && quickSearch.query.isEmpty()) {
+                            supportFinishAfterTransition()
+                        }
+                        false
+                    }
                 }
             }
         }
