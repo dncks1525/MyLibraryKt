@@ -16,7 +16,6 @@ data class BookDetail(
     val price: String,
     val image: String,
     val url: String,
-    val pdf: Pdf
 ) {
     fun toBook() = Book(title, subtitle, isbn13, price, image, url)
 }

@@ -20,7 +20,7 @@ android {
         versionName = "1.0"
         resConfigs("en", "mdpi")
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.chani.mylibrarykt.MyTestRunner"
     }
 
     buildTypes {
@@ -48,6 +48,7 @@ android {
 
     testOptions {
         unitTests.isReturnDefaultValues = true
+        unitTests.isIncludeAndroidResources = true
     }
 
     kotlinOptions {
@@ -56,6 +57,10 @@ android {
 
     kapt {
         correctErrorTypes = true
+    }
+
+    hilt {
+        enableTransformForLocalTests = true
     }
 }
 
@@ -69,7 +74,6 @@ dependencies {
     room()
     paging()
     glide()
-    junit4()
     robolectric()
     truth()
 }

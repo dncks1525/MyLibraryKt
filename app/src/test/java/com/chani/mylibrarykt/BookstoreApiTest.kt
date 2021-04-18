@@ -47,6 +47,8 @@ class BookstoreApiTest {
             } catch (e: Exception) {
                 println(e.toString())
             }
+
+            Truth.assertThat(isWorking)
         }
     }
 
@@ -65,6 +67,8 @@ class BookstoreApiTest {
             } catch (e: Exception) {
                 println(e.toString())
             }
+
+            Truth.assertThat(isWorking)
         }
     }
 }

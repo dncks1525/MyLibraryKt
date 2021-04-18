@@ -16,6 +16,8 @@ object Versions {
 
     const val JUNIT4 = "4.13.1"
     const val JUNIT4_TEST_EXT = "1.1.2"
+    const val TEST_CORE_KTX = "1.3.0"
+    const val ANDROID_JUNIT_RUNNER = "1.3.0"
     const val MOCKITO = "2.25.0"
     const val ESPRESSO = "3.2.0"
     const val ROBOLECTRIC = "4.5.1"

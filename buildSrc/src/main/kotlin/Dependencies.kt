@@ -15,6 +15,12 @@ fun DependencyHandler.common() {
     implementation("com.google.android.material:material:${Versions.MATERIAL}")
     implementation("androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINTLAYOUT}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
+
+    testImplementation("junit:junit:${Versions.JUNIT4}")
+    androidTestImplementation("androidx.test.ext:junit:${Versions.JUNIT4_TEST_EXT}")
+    androidTestImplementation("androidx.test:core-ktx:${Versions.TEST_CORE_KTX}")
+    androidTestImplementation("androidx.test:runner:${Versions.ANDROID_JUNIT_RUNNER}")
+    androidTestImplementation("androidx.test:rules:${Versions.ANDROID_JUNIT_RUNNER}")
 }
 
 fun DependencyHandler.firebasePlugin() {
@@ -28,13 +34,18 @@ fun DependencyHandler.firebase() {
     implementation("com.google.firebase:firebase-analytics-ktx")
 }
 
-fun DependencyHandler.junit4() {
-    testImplementation("junit:junit:${Versions.JUNIT4}")
-    androidTestImplementation("androidx.test.ext:junit:${Versions.JUNIT4_TEST_EXT}")
+fun DependencyHandler.espresso() {
+    androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.ESPRESSO}")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:${Versions.ESPRESSO}")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:${Versions.ESPRESSO}")
+    androidTestImplementation("androidx.test.espresso:espresso-accessibility:${Versions.ESPRESSO}")
+    androidTestImplementation("androidx.test.espresso:espresso-web:${Versions.ESPRESSO}")
+    androidTestImplementation("androidx.test.espresso:idling:idling-concurrent:${Versions.ESPRESSO}")
 }
 
 fun DependencyHandler.truth() {
     testImplementation("com.google.truth:truth:${Versions.TRUTH}")
+    androidTestImplementation("com.google.truth:truth:${Versions.TRUTH}")
 }
 
 fun DependencyHandler.robolectric() {

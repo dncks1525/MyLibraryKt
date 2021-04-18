@@ -26,11 +26,14 @@ abstract class HistoryDao {
     abstract fun insert(history: History)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAll(histories: List<History>)
+    abstract fun insert(histories: List<History>)
 
     @Delete
     abstract fun delete(history: History)
 
-    @Query("DELETE FROM History")
-    abstract fun deleteAll()
+    @Delete
+    abstract fun delete(histories: List<History>)
+
+//    @Query("DELETE FROM History")
+//    abstract fun deleteAll()
 }
