@@ -1,4 +1,4 @@
-package com.chani.mylibrarykt.data.remote.model
+package com.chani.mylibrarykt.data.model
 
 data class BookDetail(
     val error: String,
@@ -16,6 +16,5 @@ data class BookDetail(
     val price: String,
     val image: String,
     val url: String,
-) {
-    fun toBook() = Book(title, subtitle, isbn13, price, image, url)
-}
+    val pdf: Pdf
+)

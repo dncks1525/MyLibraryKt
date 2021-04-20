@@ -8,22 +8,20 @@ import androidx.paging.LoadState
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.chani.mylibrarykt.data.local.History
+import com.chani.mylibrarykt.data.BookListType
+import com.chani.mylibrarykt.data.model.LibraryResponse
 import com.chani.mylibrarykt.databinding.ItemRecentBooksBinding
-import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.RecentBooksViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.coroutines.suspendCoroutine
 
 class RecentBooksAdapter(
     private val recentBooksViewModel: RecentBooksViewModel
-) : PagingDataAdapter<List<History>, RecentBooksAdapter.RecentBooksHolder>(RecentBooksComparator()) {
+) : PagingDataAdapter<LibraryResponse, RecentBooksAdapter.RecentBooksHolder>(RecentBooksComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentBooksHolder {
         return RecentBooksHolder(
             ItemRecentBooksBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,12 +35,12 @@ class RecentBooksAdapter(
     inner class RecentBooksHolder(
         private val binding: ItemRecentBooksBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(histories: List<History>) = with(binding) {
+        fun bind(libraryResponse: LibraryResponse) = with(binding) {
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = formatter.format(histories.first().timestamp)
+            val date = formatter.format(libraryResponse.books.first().timestamp)
             dateTxt.text = date
 
-            val adapter = HistoryAdapter().apply {
+            val adapter = BookAdapter(BookListType.LIST_WITH_NO_HISTORY).apply {
                 CoroutineScope(Dispatchers.Main).launch {
                     loadStateFlow.collectLatest { state ->
                         if (state.refresh == LoadState.Loading) {
@@ -55,22 +53,23 @@ class RecentBooksAdapter(
                     }
                 }
             }
+
             historyRecycler.adapter = adapter
             CoroutineScope(Dispatchers.IO).launch {
-                recentBooksViewModel.transformHistories(histories).collectLatest {
+                recentBooksViewModel.flowFrom(libraryResponse.books).collectLatest {
                     adapter.submitData(it)
                 }
             }
         }
     }
 
-    private class RecentBooksComparator : DiffUtil.ItemCallback<List<History>>() {
-        override fun areContentsTheSame(oldItem: List<History>, newItem: List<History>): Boolean {
-            return oldItem == newItem
+    private class RecentBooksComparator : DiffUtil.ItemCallback<LibraryResponse>() {
+        override fun areContentsTheSame(oldItem: LibraryResponse, newItem: LibraryResponse): Boolean {
+            return oldItem.books.first().isbn13 == newItem.books.first().isbn13
         }
 
-        override fun areItemsTheSame(oldItem: List<History>, newItem: List<History>): Boolean {
-            return oldItem.first().isbn13 == newItem.first().isbn13
+        override fun areItemsTheSame(oldItem: LibraryResponse, newItem: LibraryResponse): Boolean {
+            return oldItem == newItem
         }
     }
 }

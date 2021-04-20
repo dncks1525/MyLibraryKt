@@ -4,32 +4,29 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.chani.mylibrarykt.AppConst
-import com.chani.mylibrarykt.databinding.ItemBookstoreBinding
+import com.chani.mylibrarykt.databinding.ItemLibraryBinding
 import com.chani.mylibrarykt.ui.BookCollectionActivity
-import com.chani.mylibrarykt.util.AppLog
-import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
+import com.chani.mylibrarykt.viewmodel.LibraryViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
-class BookstoreAdapter(
+class LibraryAdapter(
     private val subjectCategories: List<String>,
-    private val bookstoreViewModel: BookstoreViewModel,
-) : RecyclerView.Adapter<BookstoreAdapter.BookstoreHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookstoreHolder {
-        return BookstoreHolder(
-            ItemBookstoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    private val libraryViewModel: LibraryViewModel,
+) : RecyclerView.Adapter<LibraryAdapter.LibraryHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryHolder {
+        return LibraryHolder(
+            ItemLibraryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: BookstoreHolder, position: Int) {
+    override fun onBindViewHolder(holder: LibraryHolder, position: Int) {
         holder.bind(subjectCategories[position])
     }
 
@@ -37,8 +34,8 @@ class BookstoreAdapter(
         return subjectCategories.size
     }
 
-    inner class BookstoreHolder(
-        private val binding: ItemBookstoreBinding
+    inner class LibraryHolder(
+        private val binding: ItemLibraryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(title: String) = with(binding) {
             titleTxt.text = title
@@ -62,11 +59,11 @@ class BookstoreAdapter(
 
             CoroutineScope(Dispatchers.IO).launch {
                 if (title == "New Releases") {
-                    bookstoreViewModel.getNewBooks().collectLatest {
+                    libraryViewModel.fetchNewBooks().collectLatest {
                         bookAdapter.submitData(it)
                     }
                 } else {
-                    bookstoreViewModel.search(title).collectLatest {
+                    libraryViewModel.fetchSearchResult(title).collectLatest {
                         bookAdapter.submitData(it)
                     }
                 }
@@ -74,7 +71,7 @@ class BookstoreAdapter(
 
             titleAreaCst.setOnClickListener {
                 val ctx = root.context
-                with(Intent(ctx, BookCollectionActivity::class.java)) {
+                Intent(ctx, BookCollectionActivity::class.java).apply {
                     putExtra(AppConst.EXTRA_TITLE, title)
                     ctx.startActivity(this)
                 }

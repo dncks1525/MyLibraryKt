@@ -12,9 +12,8 @@ import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.adapter.BookFooterAdapter
 import com.chani.mylibrarykt.databinding.ActivityBookCollectionBinding
 import com.chani.mylibrarykt.databinding.ContentSubjectBinding
-import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
+import com.chani.mylibrarykt.viewmodel.LibraryViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BookCollectionActivity : AppCompatActivity() {
     @Inject lateinit var binding: ActivityBookCollectionBinding
-    private val bookstoreViewModel: BookstoreViewModel by viewModels()
+    private val libraryViewModel: LibraryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +52,11 @@ class BookCollectionActivity : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     if (title == "New Releases") {
-                        bookstoreViewModel.getNewBooks().collectLatest {
+                        libraryViewModel.fetchNewBooks().collectLatest {
                             adapter.submitData(it)
                         }
                     } else {
-                        bookstoreViewModel.search(title).collectLatest {
+                        libraryViewModel.fetchSearchResult(title).collectLatest {
                             adapter.submitData(it)
                         }
                     }

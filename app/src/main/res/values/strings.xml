@@ -19,5 +19,6 @@
     <string name="book_isbn13">ISBN13</string>
     <string name="book_buy">%1$s BUY</string>
     <string name="book_describe">Describe</string>
+    <string name="book_pdf">PDF</string>
 
 </resources>

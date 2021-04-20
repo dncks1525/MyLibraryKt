@@ -16,10 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.adapter.BookFooterAdapter
-import com.chani.mylibrarykt.data.enum.BookType
+import com.chani.mylibrarykt.data.BookListType
 import com.chani.mylibrarykt.databinding.ActivityBookSearchBinding
-import com.chani.mylibrarykt.util.AppLog
-import com.chani.mylibrarykt.viewmodel.BookstoreViewModel
+import com.chani.mylibrarykt.viewmodel.LibraryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,14 +28,14 @@ import javax.inject.Inject
 class BookSearchActivity : AppCompatActivity() {
     @Inject lateinit var binding: ActivityBookSearchBinding
     @Inject lateinit var searchRecentSuggestions: SearchRecentSuggestions
-    private val bookstoreViewModel: BookstoreViewModel by viewModels()
+    private val libraryViewModel: LibraryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         with(binding) {
-            val bookAdapter = BookAdapter(BookType.LIST).apply {
+            val bookAdapter = BookAdapter(BookListType.LIST).apply {
                 lifecycleScope.launch {
                     loadStateFlow.collectLatest { state ->
                         if (state.refresh == LoadState.Loading) {
@@ -55,12 +54,11 @@ class BookSearchActivity : AppCompatActivity() {
                     }
                 }
             }
-            val bookFooterAdapter = BookFooterAdapter(bookAdapter::retry)
-            bookRecycler.adapter = bookAdapter.withLoadStateFooter(bookFooterAdapter)
+            bookRecycler.adapter = bookAdapter.withLoadStateFooter(BookFooterAdapter(bookAdapter::retry))
             bookRecycler.setHasFixedSize(true)
 
             val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            with(quickSearch) {
+            quickSearch.apply {
                 onActionViewExpanded()
                 setSearchableInfo(searchManager.getSearchableInfo(componentName))
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -68,7 +66,7 @@ class BookSearchActivity : AppCompatActivity() {
                         if (query != null) {
                             clearFocus()
                             lifecycleScope.launch {
-                                bookstoreViewModel.search(query).collectLatest {
+                                libraryViewModel.fetchSearchResult(query).collectLatest {
                                     bookAdapter.submitData(it)
                                 }
                             }
@@ -87,18 +85,14 @@ class BookSearchActivity : AppCompatActivity() {
                 }
             }
 
-            var isKeyboardShowing = false
             root.viewTreeObserver.addOnGlobalLayoutListener {
                 Rect().apply {
                     root.getWindowVisibleDisplayFrame(this)
                     val diff = root.rootView.height - bottom
-                    isKeyboardShowing = if (diff > (root.rootView.height / 4)) {
-                        true
-                    } else {
-                        if (isKeyboardShowing && quickSearch.query.isEmpty()) {
+                    (diff > (root.rootView.height / 4)).also { isKeyboardShowing ->
+                        if (!isKeyboardShowing && quickSearch.query.isEmpty()) {
                             supportFinishAfterTransition()
                         }
-                        false
                     }
                 }
             }
@@ -108,7 +102,7 @@ class BookSearchActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (Intent.ACTION_SEARCH == intent.action) {
-            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+            intent.getStringExtra(SearchManager.QUERY)?.let { query ->
                 binding.quickSearch.clearFocus()
                 binding.quickSearch.setQuery(query, true)
             }

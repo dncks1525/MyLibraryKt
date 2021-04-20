@@ -22,6 +22,7 @@
         android:layout_width="140dp"
         android:layout_height="180dp"
         android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
         android:transitionName="@string/transition_cover_img"
         app:layout_constraintStart_toStartOf="@id/backImgbtn"
         app:layout_constraintTop_toBottomOf="@id/backImgbtn"
@@ -32,8 +33,6 @@
         style="@style/BookDetailText.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/coverImg"
         app:layout_constraintTop_toTopOf="@id/coverImg"
@@ -44,7 +43,6 @@
         style="@style/BookDetailText.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="@id/titleTxt"
         app:layout_constraintStart_toStartOf="@id/titleTxt"
         app:layout_constraintTop_toBottomOf="@id/titleTxt"
@@ -55,7 +53,6 @@
         style="@style/BookDetailText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@id/titleTxt"
         app:layout_constraintStart_toStartOf="@id/titleTxt"
         app:layout_constraintTop_toBottomOf="@id/subtitleTxt"
@@ -66,7 +63,6 @@
         style="@style/BookDetailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toStartOf="@id/ratingVerDividerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/coverImg"
@@ -117,8 +113,8 @@
         android:id="@+id/buyBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ratingTxt"
@@ -137,8 +133,8 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
         android:fillViewport="true"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +173,6 @@
                 style="@style/BookDetailText.Describe"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 app:layout_constraintEnd_toEndOf="@id/endGuideline"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/describeLabelTxt"
@@ -196,10 +191,9 @@
 
             <TextView
                 android:id="@+id/publisherLabelTxt"
-                style="@style/BookDetailText"
+                style="@style/BookDetailText.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="@string/book_publisher"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/describeHorDividerView" />
@@ -209,18 +203,15 @@
                 style="@style/BookDetailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:includeFontPadding="false"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/publisherLabelTxt"
                 tools:text="@string/sample" />
 
             <TextView
                 android:id="@+id/yearLabelTxt"
-                style="@style/BookDetailText"
+                style="@style/BookDetailText.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/book_year"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/publisherTxt" />
@@ -230,17 +221,15 @@
                 style="@style/BookDetailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/yearLabelTxt"
                 tools:text="@string/sample" />
 
             <TextView
                 android:id="@+id/langLabelTxt"
-                style="@style/BookDetailText"
+                style="@style/BookDetailText.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/book_language"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/yearTxt" />
@@ -250,17 +239,15 @@
                 style="@style/BookDetailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/langLabelTxt"
                 tools:text="@string/sample" />
 
             <TextView
                 android:id="@+id/isbn10LabelTxt"
-                style="@style/BookDetailText"
+                style="@style/BookDetailText.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/book_isbn10"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/langTxt" />
@@ -270,17 +257,15 @@
                 style="@style/BookDetailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/isbn10LabelTxt"
                 tools:text="@string/sample" />
 
             <TextView
                 android:id="@+id/isbn13LabelTxt"
-                style="@style/BookDetailText"
+                style="@style/BookDetailText.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/book_isbn13"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/isbn10Txt" />
@@ -290,9 +275,26 @@
                 style="@style/BookDetailText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/startGuideline"
                 app:layout_constraintTop_toBottomOf="@id/isbn13LabelTxt"
+                tools:text="@string/sample" />
+
+            <TextView
+                android:id="@+id/pdfLabelTxt"
+                style="@style/BookDetailText.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/book_pdf"
+                app:layout_constraintStart_toStartOf="@id/startGuideline"
+                app:layout_constraintTop_toBottomOf="@id/isbn13Txt" />
+
+            <TextView
+                android:id="@+id/pdfTxt"
+                style="@style/BookDetailText.Pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/startGuideline"
+                app:layout_constraintTop_toBottomOf="@id/pdfLabelTxt"
                 tools:text="@string/sample" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

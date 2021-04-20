@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="@id/dateTxt"
         app:layout_constraintTop_toBottomOf="@id/dateTxt"
         tools:itemCount="0"
-        tools:listitem="@layout/item_history" />
+        tools:listitem="@layout/item_book" />
 
     <ProgressBar
         android:id="@+id/loadingProgress"

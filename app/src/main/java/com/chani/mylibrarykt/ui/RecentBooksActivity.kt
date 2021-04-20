@@ -1,18 +1,13 @@
 package com.chani.mylibrarykt.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.adapter.RecentBooksAdapter
-import com.chani.mylibrarykt.data.local.HistoryDao
 import com.chani.mylibrarykt.databinding.ActivityRecentBooksBinding
 import com.chani.mylibrarykt.databinding.ContentSubjectBinding
-import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.RecentBooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -32,9 +27,7 @@ class RecentBooksActivity : AppCompatActivity() {
         with(binding) {
             with(ContentSubjectBinding.bind(root)) {
                 titleTxt.text = getString(R.string.common_recent_books)
-                backImgbtn.setOnClickListener {
-                    finish()
-                }
+                backImgbtn.setOnClickListener { finish() }
             }
 
             val recentBooksAdapter = RecentBooksAdapter(recentBooksViewModel)
@@ -42,7 +35,7 @@ class RecentBooksActivity : AppCompatActivity() {
             recentBooksRecycler.setHasFixedSize(true)
 
             lifecycleScope.launch(Dispatchers.IO) {
-                recentBooksViewModel.getRecentBooks().collectLatest {
+                recentBooksViewModel.getLibraryResponsesByDate().collectLatest {
                     recentBooksAdapter.submitData(it)
                 }
             }

@@ -2,18 +2,22 @@ package com.chani.mylibrarykt.ui
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
 import com.chani.mylibrarykt.R
-import com.chani.mylibrarykt.convertTo
-import com.chani.mylibrarykt.data.local.HistoryDao
-import com.chani.mylibrarykt.data.remote.BookstoreApi
-import com.chani.mylibrarykt.data.remote.model.BookDetail
+import com.chani.mylibrarykt.data.LibraryRepository
+import com.chani.mylibrarykt.data.model.BookDetail
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
+import com.chani.mylibrarykt.toBook
+import com.chani.mylibrarykt.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,8 +30,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BookDetailActivity : AppCompatActivity() {
     @Inject lateinit var binding: ActivityBookDetailBinding
-    @Inject lateinit var bookstoreApi: BookstoreApi
-    @Inject lateinit var historyDao: HistoryDao
+    @Inject lateinit var libraryRepository: LibraryRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +47,6 @@ class BookDetailActivity : AppCompatActivity() {
                 coverImg.setImageBitmap(BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size))
             }
 
-            val isNoHistory = intent.getBooleanExtra(AppConst.EXTRA_NO_HISTORY, false)
-
             intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
                 lifecycleScope.launch {
                     root.children.forEach { v ->
@@ -54,7 +55,7 @@ class BookDetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    val bookDetail = bookstoreApi.getBookDetail(isbn).apply {
+                    val bookDetail = libraryRepository.fetchBookDetail(isbn).apply {
                         titleTxt.text = title
                         subtitleTxt.text = subtitle
                         authorTxt.text = authors
@@ -67,6 +68,23 @@ class BookDetailActivity : AppCompatActivity() {
                         langTxt.text = language
                         isbn10Txt.text = isbn10
                         isbn13Txt.text = isbn13
+
+                        with(pdf) {
+                            val builder = SpannableStringBuilder()
+                            arrayListOf(chapter1, chapter2, chapter3, chapter4, chapter5).forEach { chapter ->
+                                if (chapter != null) {
+                                    builder.append(chapter)
+                                    builder.setSpan(object : ClickableSpan() {
+                                        override fun onClick(widget: View) {
+                                            AppLog.d("click!!! ")
+                                        }
+                                    }, builder.length - chapter.length, builder.length, 0)
+                                }
+                            }
+
+                            pdfTxt.movementMethod = LinkMovementMethod.getInstance()
+                            pdfTxt.setText(builder, TextView.BufferType.SPANNABLE)
+                        }
 
                         root.children.forEach { v ->
                             if (v.visibility == View.INVISIBLE) {
@@ -81,8 +99,9 @@ class BookDetailActivity : AppCompatActivity() {
                     }
 
                     withContext(Dispatchers.IO) {
+                        val isNoHistory = intent.getBooleanExtra(AppConst.EXTRA_NO_HISTORY, false)
                         if (!isNoHistory && imgByteArray != null) {
-                            saveToRecentHistoryDatabase(imgByteArray, bookDetail)
+                            saveRecentBook(bookDetail, imgByteArray)
                         }
                     }
                 }
@@ -90,7 +109,7 @@ class BookDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToRecentHistoryDatabase(arr: ByteArray, bookDetail: BookDetail) {
+    private fun saveRecentBook(bookDetail: BookDetail, arr: ByteArray) {
         val imgFile = File(filesDir, "${bookDetail.isbn13}.png")
         if (!imgFile.exists()) {
             try {
@@ -104,6 +123,6 @@ class BookDetailActivity : AppCompatActivity() {
             }
         }
 
-        historyDao.insert(bookDetail.toBook().convertTo(Calendar.getInstance().timeInMillis, imgFile.path))
+        libraryRepository.insert(bookDetail.toBook(imgFile.path))
     }
 }

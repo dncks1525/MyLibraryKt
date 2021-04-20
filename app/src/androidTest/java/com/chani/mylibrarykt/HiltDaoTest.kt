@@ -2,12 +2,14 @@ package com.chani.mylibrarykt
 
 import android.content.Context
 import androidx.room.Room
-import com.chani.mylibrarykt.data.local.History
-import com.chani.mylibrarykt.data.local.HistoryDao
-import com.chani.mylibrarykt.data.local.HistoryDatabase
-import com.chani.mylibrarykt.data.remote.BookstoreApi
+import com.chani.mylibrarykt.data.LibraryRepository
+import com.chani.mylibrarykt.data.local.LibraryDao
+import com.chani.mylibrarykt.data.local.LibraryDatabase
+import com.chani.mylibrarykt.data.model.Book
+import com.chani.mylibrarykt.data.remote.LibraryService
 import com.chani.mylibrarykt.di.module.RepositoryModule
-import com.google.common.truth.Truth.*
+import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,39 +34,22 @@ class HiltDaoTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @Inject lateinit var historyDao: HistoryDao
-    @Inject lateinit var bookstoreApi: BookstoreApi
-    private lateinit var history: History
+    @Inject lateinit var libraryRepository: LibraryRepository
 
     @Before
     fun setup() {
         hiltRule.inject()
-
-        runBlocking {
-            bookstoreApi.getNewBooks().books.last().also { book ->
-                val timestamp = Calendar.getInstance().timeInMillis
-                history = book.convertTo(timestamp, "myTestImgPath")
-            }
-        }
-    }
-
-    @Test
-    fun deleteTest() {
-        runBlocking {
-            historyDao.delete(history)
-            val lastHistory = historyDao.getLastHistory()
-            assertThat(lastHistory?.isbn13).isNotEqualTo(history.isbn13)
-        }
     }
 
     @Test
     fun insertTest() {
         runBlocking {
-            historyDao.insert(history)
-            val lastHistory = historyDao.getLastHistory()
-            assertThat(lastHistory?.isbn13).isEqualTo(history.isbn13)
-
-            historyDao.delete(history)
+            with(libraryRepository) {
+                val book = fetchNewBooks().books.first()
+                insert(book)
+                assertThat(getBookLast()?.isbn13).isEqualTo(book.isbn13)
+                delete(book)
+            }
         }
     }
 
@@ -77,37 +62,54 @@ class HiltDaoTest {
                 set(Calendar.DAY_OF_MONTH, 20)
             }.timeInMillis
 
-            val histories = bookstoreApi.getNewBooks().books.take(3).map {
-                it.convertTo(timestamp, "testImgPath")
-            }
-            historyDao.insert(histories)
-
             val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val recentBooks = historyDao.getRecentBooks().find {
-                formatter.format(it.first().timestamp).equals("1980-06-20")
-            }
-            assertThat(recentBooks?.map { it.isbn13 }).isEqualTo(histories.map { it.isbn13 })
 
-            if (recentBooks != null) {
-                historyDao.delete(recentBooks)
+            with(libraryRepository) {
+                val books = fetchNewBooks().books.take(3).let { newBooks ->
+                    mutableListOf<Book>().apply {
+                        newBooks.forEach {
+                            add(Book(it.title, it.subtitle, it.isbn13, "", "", "", "", timestamp))
+                        }
+                    }
+                }
+
+                insert(*books.toTypedArray())
+
+                getLibraryResponsesByDate().find {
+                    formatter.format(it.books.first().timestamp).equals("1980-06-20")
+                }.also { response ->
+                    assertThat(response).isNotNull()
+                    if (response != null) {
+                        assertThat(response.books.map { it.isbn13 }).isEqualTo(books.map { it.isbn13 })
+                        delete(*response.books.toTypedArray())
+                    }
+                }
             }
         }
     }
 
     @Module
     @InstallIn(SingletonComponent::class)
-    object TestRepositoryModule {
+    object FakeRepositoryModule {
         @Provides
-        fun provideBookstoreApi() = Retrofit.Builder()
+        fun provideLibraryService() = Retrofit.Builder()
             .baseUrl("https://api.itbook.store/1.0/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(BookstoreApi::class.java)
+            .create(LibraryService::class.java)
 
         @Provides
-        fun provideHistoryDao(@ApplicationContext ctx: Context) =
-            Room.databaseBuilder(ctx, HistoryDatabase::class.java, "History")
+        fun provideLibraryDao(@ApplicationContext ctx: Context) =
+            Room.databaseBuilder(ctx, LibraryDatabase::class.java, "Library")
                 .build()
-                .getHistoryDao()
+                .getLibraryDao()
+
+        @Provides
+        fun provideLibraryRepository(
+            libraryService: LibraryService,
+            libraryDao: LibraryDao
+        ): LibraryRepository {
+            return LibraryRepository(libraryService, libraryDao)
+        }
     }
 }

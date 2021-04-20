@@ -3,12 +3,13 @@ package com.chani.mylibrarykt
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
-import com.chani.mylibrarykt.data.local.History
-import com.chani.mylibrarykt.data.remote.model.Book
+import com.chani.mylibrarykt.data.model.Book
+import com.chani.mylibrarykt.data.model.BookDetail
 import java.io.ByteArrayOutputStream
+import java.util.*
 
-fun Book.convertTo(timestamp: Long, imgPath: String): History {
-    return History(0, timestamp, imgPath, title, subtitle, isbn13, price)
+fun BookDetail.toBook(localImgPath: String): Book {
+    return Book(title, subtitle, isbn13, price, image, url, localImgPath, Calendar.getInstance().timeInMillis)
 }
 
 fun ImageView.toByteArray(): ByteArray? {
