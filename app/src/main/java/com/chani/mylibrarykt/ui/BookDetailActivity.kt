@@ -1,6 +1,8 @@
 package com.chani.mylibrarykt.ui
 
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
@@ -76,7 +78,9 @@ class BookDetailActivity : AppCompatActivity() {
                                     builder.append(chapter)
                                     builder.setSpan(object : ClickableSpan() {
                                         override fun onClick(widget: View) {
-                                            AppLog.d("click!!! ")
+                                            Intent(Intent.ACTION_VIEW, Uri.parse(chapter)).apply {
+                                                startActivity(this)
+                                            }
                                         }
                                     }, builder.length - chapter.length, builder.length, 0)
                                 }
