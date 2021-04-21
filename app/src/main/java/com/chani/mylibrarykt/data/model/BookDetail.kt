@@ -16,5 +16,5 @@ data class BookDetail(
     val price: String,
     val image: String,
     val url: String,
-    val pdf: Pdf
+    val pdf: Pdf?
 )

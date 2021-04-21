@@ -12,14 +12,17 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.chani.mylibrarykt.adapter.BookAdapter
 import com.chani.mylibrarykt.adapter.BookFooterAdapter
 import com.chani.mylibrarykt.data.BookListType
 import com.chani.mylibrarykt.databinding.ActivityBookSearchBinding
+import com.chani.mylibrarykt.util.AppLog
 import com.chani.mylibrarykt.viewmodel.LibraryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -85,14 +88,18 @@ class BookSearchActivity : AppCompatActivity() {
                 }
             }
 
+            var isKeyboardShowing = false
             root.viewTreeObserver.addOnGlobalLayoutListener {
                 Rect().apply {
                     root.getWindowVisibleDisplayFrame(this)
                     val diff = root.rootView.height - bottom
-                    (diff > (root.rootView.height / 4)).also { isKeyboardShowing ->
-                        if (!isKeyboardShowing && quickSearch.query.isEmpty()) {
+                    if (diff > (root.rootView.height / 4)) {
+                        isKeyboardShowing = true
+                    } else {
+                        if (isKeyboardShowing && quickSearch.query.isEmpty()) {
                             supportFinishAfterTransition()
                         }
+                        isKeyboardShowing = false
                     }
                 }
             }

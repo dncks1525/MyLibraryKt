@@ -71,9 +71,15 @@ class BookDetailActivity : AppCompatActivity() {
                         isbn10Txt.text = isbn10
                         isbn13Txt.text = isbn13
 
-                        with(pdf) {
+                        if (pdf != null) {
                             val builder = SpannableStringBuilder()
-                            arrayListOf(chapter1, chapter2, chapter3, chapter4, chapter5).forEach { chapter ->
+                            arrayListOf(
+                                pdf.chapter1,
+                                pdf.chapter2,
+                                pdf.chapter3,
+                                pdf.chapter4,
+                                pdf.chapter5
+                            ).forEach { chapter ->
                                 if (chapter != null) {
                                     builder.append(chapter)
                                     builder.setSpan(object : ClickableSpan() {
@@ -86,8 +92,12 @@ class BookDetailActivity : AppCompatActivity() {
                                 }
                             }
 
-                            pdfTxt.movementMethod = LinkMovementMethod.getInstance()
-                            pdfTxt.setText(builder, TextView.BufferType.SPANNABLE)
+                            if (builder.isNotEmpty()) {
+                                pdfTxt.movementMethod = LinkMovementMethod.getInstance()
+                                pdfTxt.setText(builder, TextView.BufferType.SPANNABLE)
+                                pdfTxt.visibility = View.VISIBLE
+                                pdfLabelTxt.visibility = View.VISIBLE
+                            }
                         }
 
                         root.children.forEach { v ->
