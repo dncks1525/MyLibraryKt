@@ -15,7 +15,7 @@ Tech Stack
     * [ViewModel][12]
     * [View Binding][13] & [Data Binding][14]
     * [Room][15]
-    * [Paging][16]
+    * [Paging3][16]
 * [Material Components][20]
 * [Hilt][30]
 * [Retrofit][40] + [GSON][41]
@@ -32,6 +32,7 @@ Tech Stack
 [13]: https://developer.android.com/topic/libraries/view-binding
 [14]: https://developer.android.com/topic/libraries/data-binding
 [15]: https://developer.android.com/training/data-storage/room
+[16]: https://developer.android.com/topic/libraries/architecture/paging/v3-overview
 [20]: https://github.com/material-components/material-components-android
 [30]: https://dagger.dev/hilt/
 [40]: https://square.github.io/retrofit/
