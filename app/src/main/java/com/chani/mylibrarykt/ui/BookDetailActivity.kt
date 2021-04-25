@@ -1,3 +1,19 @@
+/**
+ * Copyright 2021 Lee Woochan <dncks1525@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.chani.mylibrarykt.ui
 
 import android.content.Intent
@@ -55,17 +71,17 @@ class BookDetailActivity : AppCompatActivity() {
 
             intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
                 lifecycleScope.launch {
-                    libraryRepository.fetchBookDetail(isbn).apply {
-                        binding.bookDetail = this
+                    libraryRepository.fetchBookDetail(isbn).also { bookDetail ->
+                        binding.bookDetail = bookDetail
 
-                        if (pdf != null) {
+                        if (bookDetail.pdf != null) {
                             val builder = SpannableStringBuilder()
                             arrayListOf(
-                                pdf.chapter1,
-                                pdf.chapter2,
-                                pdf.chapter3,
-                                pdf.chapter4,
-                                pdf.chapter5
+                                bookDetail.pdf.chapter1,
+                                bookDetail.pdf.chapter2,
+                                bookDetail.pdf.chapter3,
+                                bookDetail.pdf.chapter4,
+                                bookDetail.pdf.chapter5
                             ).forEach { chapter ->
                                 if (chapter != null) {
                                     builder.append(chapter)
@@ -86,6 +102,13 @@ class BookDetailActivity : AppCompatActivity() {
                                 pdfLabelTxt.visibility = View.VISIBLE
                             }
                         }
+
+                        withContext(Dispatchers.IO) {
+                            val isNoHistory = intent.getBooleanExtra(AppConst.EXTRA_NO_HISTORY, false)
+                            if (!isNoHistory && imgByteArray != null) {
+                                saveRecentBook(bookDetail, imgByteArray)
+                            }
+                        }
                     }
 
                     rootCst.children.forEach { view ->
@@ -96,13 +119,6 @@ class BookDetailActivity : AppCompatActivity() {
                                 .alpha(1f)
                                 .setDuration(300L)
                                 .start()
-                        }
-                    }
-
-                    withContext(Dispatchers.IO) {
-                        val isNoHistory = intent.getBooleanExtra(AppConst.EXTRA_NO_HISTORY, false)
-                        if (!isNoHistory && imgByteArray != null) {
-                            saveRecentBook(bookDetail, imgByteArray)
                         }
                     }
                 }

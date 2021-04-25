@@ -70,7 +70,6 @@ dependencies {
     lifecycle()
     retrofit()
     hilt()
-    work()
     room()
     paging()
     glide()
