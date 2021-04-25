@@ -14,12 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.chani.mylibrarykt.AppConst
-import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.data.LibraryRepository
 import com.chani.mylibrarykt.data.model.BookDetail
 import com.chani.mylibrarykt.databinding.ActivityBookDetailBinding
-import com.chani.mylibrarykt.toBook
-import com.chani.mylibrarykt.util.AppLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +37,7 @@ class BookDetailActivity : AppCompatActivity() {
 
         with(binding) {
             backImgbtn.setOnClickListener { supportFinishAfterTransition() }
+
             buyBtn.setOnClickListener {
                 Toast.makeText(this@BookDetailActivity, "Thank you!", Toast.LENGTH_SHORT).show()
             }
@@ -49,27 +47,16 @@ class BookDetailActivity : AppCompatActivity() {
                 coverImg.setImageBitmap(BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size))
             }
 
+            rootCst.children.forEach { view ->
+                if (view != coverImg) {
+                    view.visibility = View.INVISIBLE
+                }
+            }
+
             intent.getStringExtra(AppConst.EXTRA_ISBN)?.let { isbn ->
                 lifecycleScope.launch {
-                    root.children.forEach { v ->
-                        if (v != coverImg) {
-                            v.visibility = View.INVISIBLE
-                        }
-                    }
-
-                    val bookDetail = libraryRepository.fetchBookDetail(isbn).apply {
-                        titleTxt.text = title
-                        subtitleTxt.text = subtitle
-                        authorTxt.text = authors
-                        ratingTxt.text = rating
-                        pagesTxt.text = pages
-                        buyBtn.text = resources.getString(R.string.book_buy).format(price)
-                        describeTxt.text = desc
-                        yearTxt.text = year
-                        publisherTxt.text = publisher
-                        langTxt.text = language
-                        isbn10Txt.text = isbn10
-                        isbn13Txt.text = isbn13
+                    libraryRepository.fetchBookDetail(isbn).apply {
+                        binding.bookDetail = this
 
                         if (pdf != null) {
                             val builder = SpannableStringBuilder()
@@ -99,16 +86,16 @@ class BookDetailActivity : AppCompatActivity() {
                                 pdfLabelTxt.visibility = View.VISIBLE
                             }
                         }
+                    }
 
-                        root.children.forEach { v ->
-                            if (v.visibility == View.INVISIBLE) {
-                                v.visibility = View.VISIBLE
-                                v.alpha = 0f
-                                v.animate()
-                                    .alpha(1f)
-                                    .setDuration(300L)
-                                    .start()
-                            }
+                    rootCst.children.forEach { view ->
+                        if (view.visibility == View.INVISIBLE) {
+                            view.visibility = View.VISIBLE
+                            view.alpha = 0f
+                            view.animate()
+                                .alpha(1f)
+                                .setDuration(300L)
+                                .start()
                         }
                     }
 

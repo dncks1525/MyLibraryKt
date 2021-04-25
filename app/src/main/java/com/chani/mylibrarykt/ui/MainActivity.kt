@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 book.localImgPath?.let { localImgPath ->
                     if (File(localImgPath).exists()) {
-                        binding.historyImgbtn.apply {
+                        binding.recentBooksImgbtn.apply {
                             if (drawable != null && drawable is BitmapDrawable) {
                                 (drawable as BitmapDrawable).bitmap.recycle()
                             }
@@ -129,8 +129,8 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        if (binding.historyImgbtn.isVisible) {
-                            binding.historyImgbtn.visibility = View.GONE
+                        if (binding.recentBooksImgbtn.isVisible) {
+                            binding.recentBooksImgbtn.visibility = View.GONE
                         }
                     }
                 }

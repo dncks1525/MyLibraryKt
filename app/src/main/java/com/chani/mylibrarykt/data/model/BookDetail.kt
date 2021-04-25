@@ -1,5 +1,7 @@
 package com.chani.mylibrarykt.data.model
 
+import java.util.*
+
 data class BookDetail(
     val error: String,
     val title: String,
@@ -17,4 +19,8 @@ data class BookDetail(
     val image: String,
     val url: String,
     val pdf: Pdf?
-)
+) {
+    fun toBook(localImgPath: String): Book {
+        return Book(title, subtitle, isbn13, price, image, url, localImgPath, Calendar.getInstance().timeInMillis)
+    }
+}

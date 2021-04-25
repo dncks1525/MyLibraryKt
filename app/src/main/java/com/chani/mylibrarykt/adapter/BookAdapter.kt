@@ -6,14 +6,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.bumptech.glide.Glide
 import com.chani.mylibrarykt.AppConst
-import com.chani.mylibrarykt.R
 import com.chani.mylibrarykt.data.BookListType
 import com.chani.mylibrarykt.data.model.Book
 import com.chani.mylibrarykt.databinding.ItemBookBinding
@@ -48,53 +45,30 @@ class BookAdapter(
         private val isNoHistory: Boolean = false,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(book: Book) {
-            val titleTxt: TextView
-            val subtitleTxt: TextView?
-            val priceTxt: TextView
-            val coverImg: ImageView
-            val root: ViewGroup
-
             when (binding) {
                 is ItemBookBinding -> {
-                    titleTxt = binding.titleTxt
-                    subtitleTxt = null
-                    priceTxt = binding.priceTxt
-                    coverImg = binding.coverImg
-                    root = binding.root
+                    binding.book = book
+                    binding.root.setOnClickListener { onClickListener(book, binding.coverImg)}
                 }
                 is ItemBookListBinding -> {
-                    titleTxt = binding.titleTxt
-                    subtitleTxt = binding.subtitleTxt
-                    priceTxt = binding.priceTxt
-                    coverImg = binding.coverImg
-                    root = binding.root
+                    binding.book = book
+                    binding.root.setOnClickListener { onClickListener(book, binding.coverImg)}
                 }
-                else -> return
             }
+        }
 
-            titleTxt.text = book.title
-            subtitleTxt?.text = book.subtitle
-            priceTxt.text = book.price
-            Glide.with(binding.root)
-                .load(book.image)
-                .placeholder(R.drawable.book_placeholder)
-                .centerCrop()
-                .thumbnail(0.3f)
-                .into(coverImg)
-
-            root.setOnClickListener {
-                val ctx = root.context
-                Intent(ctx, BookDetailActivity::class.java).apply {
-                    putExtra(AppConst.EXTRA_ISBN, book.isbn13)
-                    putExtra(AppConst.EXTRA_COVER, coverImg.toByteArray())
-                    putExtra(AppConst.EXTRA_NO_HISTORY, isNoHistory)
-                    val options = ActivityOptions.makeSceneTransitionAnimation(
-                        (root.context as Activity),
-                        coverImg,
-                        coverImg.transitionName
-                    )
-                    ctx.startActivity(this, options.toBundle())
-                }
+        private fun onClickListener(book: Book, coverImg: ImageView) {
+            val context = binding.root.context
+            Intent(context, BookDetailActivity::class.java).apply {
+                putExtra(AppConst.EXTRA_ISBN, book.isbn13)
+                putExtra(AppConst.EXTRA_COVER, coverImg.toByteArray())
+                putExtra(AppConst.EXTRA_NO_HISTORY, isNoHistory)
+                val options = ActivityOptions.makeSceneTransitionAnimation(
+                    (context as Activity),
+                    coverImg,
+                    coverImg.transitionName
+                )
+                context.startActivity(this, options.toBundle())
             }
         }
     }

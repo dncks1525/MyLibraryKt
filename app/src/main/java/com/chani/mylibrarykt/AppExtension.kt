@@ -3,14 +3,9 @@ package com.chani.mylibrarykt
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
-import com.chani.mylibrarykt.data.model.Book
-import com.chani.mylibrarykt.data.model.BookDetail
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import java.io.ByteArrayOutputStream
-import java.util.*
-
-fun BookDetail.toBook(localImgPath: String): Book {
-    return Book(title, subtitle, isbn13, price, image, url, localImgPath, Calendar.getInstance().timeInMillis)
-}
 
 fun ImageView.toByteArray(): ByteArray? {
     val bitmapDrawable = drawable as? BitmapDrawable
@@ -22,4 +17,14 @@ fun ImageView.toByteArray(): ByteArray? {
     }
 
     return null
+}
+
+@BindingAdapter("app:bindImage")
+fun ImageView.bindImage(url: String?) {
+    Glide.with(context)
+        .load(url)
+        .placeholder(R.drawable.book_placeholder)
+        .centerCrop()
+        .thumbnail(0.3f)
+        .into(this)
 }

@@ -95,7 +95,7 @@
         tools:listitem="@layout/item_library" />
 
     <ImageButton
-        android:id="@+id/historyImgbtn"
+        android:id="@+id/recentBooksImgbtn"
         android:layout_width="50dp"
         android:layout_height="70dp"
         android:background="@drawable/shape_recent_background"

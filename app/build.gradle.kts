@@ -16,8 +16,8 @@ android {
         applicationId = "com.chani.mylibrarykt"
         minSdkVersion(21)
         targetSdkVersion(30)
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
         resConfigs("en", "mdpi")
 
         testInstrumentationRunner = "com.chani.mylibrarykt.MyTestRunner"

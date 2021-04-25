@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="140dp"
-    android:layout_marginTop="10dp"
-    android:background="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="5dp">
+<layout>
+    <data>
+        <variable
+            name="book"
+            type="com.chani.mylibrarykt.data.model.Book" />
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="5dp">
 
-        <ImageView
-            android:id="@+id/coverImg"
-            android:layout_width="120dp"
-            android:layout_height="0dp"
-            android:transitionName="@string/transition_cover_img"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/book_sample" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/titleTxt"
-            style="@style/BookListText.Title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toTopOf="@id/subtitleTxt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/coverImg"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/sample" />
+            <ImageView
+                android:id="@+id/coverImg"
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:transitionName="@string/transition_cover_img"
+                app:bindImage="@{book.image}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/book_sample" />
 
-        <TextView
-            android:id="@+id/subtitleTxt"
-            style="@style/BookListText.Subtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="@id/titleTxt"
-            app:layout_constraintStart_toStartOf="@id/titleTxt"
-            app:layout_constraintTop_toBottomOf="@id/titleTxt"
-            tools:text="@string/sample" />
+            <TextView
+                android:id="@+id/titleTxt"
+                style="@style/BookListText.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@{book.title}"
+                app:layout_constraintBottom_toTopOf="@id/subtitleTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/coverImg"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/sample" />
 
-        <TextView
-            android:id="@+id/priceTxt"
-            style="@style/BookListText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/titleTxt"
-            app:layout_constraintStart_toStartOf="@id/titleTxt"
-            tools:text="@string/sample" />
+            <TextView
+                android:id="@+id/subtitleTxt"
+                style="@style/BookListText.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{book.subtitle}"
+                app:layout_constraintEnd_toEndOf="@id/titleTxt"
+                app:layout_constraintStart_toStartOf="@id/titleTxt"
+                app:layout_constraintTop_toBottomOf="@id/titleTxt"
+                tools:text="@string/sample" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/priceTxt"
+                style="@style/BookListText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="@{book.price}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/titleTxt"
+                app:layout_constraintStart_toStartOf="@id/titleTxt"
+                tools:text="@string/sample" />
 
-</androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

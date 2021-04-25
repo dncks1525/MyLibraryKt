@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="130dp"
-    android:layout_height="200dp"
-    android:background="?attr/selectableItemBackground"
-    android:orientation="vertical">
+<layout>
+    <data>
+        <variable
+            name="book"
+            type="com.chani.mylibrarykt.data.model.Book" />
+    </data>
 
-    <ImageView
-        android:id="@+id/coverImg"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:transitionName="@string/transition_cover_img"
-        tools:src="@drawable/book_sample" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="130dp"
+        android:layout_height="200dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/titleTxt"
-        style="@style/AppText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="2dp"
-        android:textSize="15sp"
-        tools:text="@string/sample" />
+        <ImageView
+            android:id="@+id/coverImg"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:transitionName="@string/transition_cover_img"
+            app:bindImage="@{book.image}"
+            tools:src="@drawable/book_sample" />
 
-    <TextView
-        android:id="@+id/priceTxt"
-        style="@style/AppText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="2dp"
-        android:textSize="13sp"
-        tools:text="@string/sample" />
+        <TextView
+            android:id="@+id/titleTxt"
+            style="@style/AppText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="2dp"
+            android:text="@{book.title}"
+            android:textSize="13sp"
+            tools:text="@string/sample" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/priceTxt"
+            style="@style/AppText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="2dp"
+            android:text="@{book.price}"
+            android:textSize="12sp"
+            tools:text="@string/sample" />
+
+    </LinearLayout>
+</layout>

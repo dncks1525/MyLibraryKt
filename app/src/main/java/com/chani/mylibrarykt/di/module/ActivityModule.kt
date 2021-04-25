@@ -2,6 +2,7 @@ package com.chani.mylibrarykt.di.module
 
 import android.content.Context
 import android.provider.SearchRecentSuggestions
+import androidx.databinding.DataBindingUtil
 import com.chani.mylibrarykt.databinding.*
 import com.chani.mylibrarykt.provider.QuickSearchProvider
 import com.chani.mylibrarykt.ui.*
