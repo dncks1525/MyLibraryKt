@@ -3,7 +3,7 @@ MyLibrary
 
 MyLibrary is a sample app with the modern android development tools.
 
-<img src="screenshot/main.png" /> <img src="screenshot/book_collection.png" /> <img src="screenshot/search.png" /> <img src="screenshot/book_detail.png" /> <img src="screenshot/recent_books.png" />
+<img src="screenshot/mylibrary.png" />
 
 
 Tech Stack
